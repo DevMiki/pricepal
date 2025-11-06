@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: pricepal-postgres
+    restart: unless-stopped
+
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_DB: pricepal
+      POSTGRES_USER: pricepal
+      POSTGRES_PASSWORD: pricepal_dev
+      PGDATA: /var/lib/postgresql/18/docker
+
+    volumes:
+      - pricepal_pgdata:/var/lib/postgresql
+      - ./pricepalBE/persistence/postgres/seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+
+volumes:
+  pricepal_pgdata:
