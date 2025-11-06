@@ -1,0 +1,52 @@
+# -----------------------------
+# OS junk
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Editors / IDEs
+# -----------------------------
+# IntelliJ / JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# -----------------------------
+# Logs & caches
+# -----------------------------
+*.log
+logs/
+**/.cache/
+**/.eslintcache
+
+# -----------------------------
+# Secrets (adjust to your policy)
+# -----------------------------
+# Ignore common .env-style files anywhere
+**/.env
+**/.env.*
+**/*.key
+**/*.pem
+
+# -----------------------------
+# Backend (Spring Boot / Java)
+# -----------------------------
+# Build outputs
+pricepalBE/target/
+pricepalBE/build/
+pricepalBE/out/
+
+# Jars/Wars produced locally
+pricepalBE/*.jar
+pricepalBE/*.war
+
+# -----------------------------
+# Frontend (Angular)
+# -----------------------------
+pricepalFE/node_modules/
+pricepalFE/dist/
+pricepalFE/.angular/
+pricepalFE/.angular/cache/
+pricepalFE/coverage/
