@@ -3,6 +3,7 @@ package com.codercollie.core.item;
 import com.codercollie.core.item.dto.ItemCreateDTO;
 import com.codercollie.core.item.dto.ItemResponseDTO;
 import com.codercollie.core.item.dto.ItemUpdateDTO;
+import com.codercollie.error.ItemNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class ItemFacadeImpl implements ItemFacade{
 
     @Override
     public ItemResponseDTO updateItem(Long id, ItemUpdateDTO itemUpdateDTO) {
-        final Item itemToUpdate = itemRepository.findById(id).orElseThrow();
+        final Item itemToUpdate = itemRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
         itemMapper.updateEntityFromDTO(itemUpdateDTO, itemToUpdate);
         final Item savedItem = itemRepository.save(itemToUpdate);
         return itemMapper.toResponse(savedItem);
@@ -39,7 +40,7 @@ public class ItemFacadeImpl implements ItemFacade{
     @Override
     public void deleteItem(Long id) {
         if (!itemRepository.existsById(id)){
-            throw new RuntimeException("non c'era nessuno lì con quell'id");
+            throw new ItemNotFoundException(id);
         }
         itemRepository.deleteById(id);
     }
