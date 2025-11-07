@@ -7,11 +7,13 @@ Thumbs.db
 # -----------------------------
 # Editors / IDEs
 # -----------------------------
-# IntelliJ / JetBrains
+# IntelliJ / JetBrains / VSCode
 .idea/
+.vscode
 *.iml
 *.iws
 *.ipr
+
 
 # -----------------------------
 # Logs & caches
