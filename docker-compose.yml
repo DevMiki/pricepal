@@ -15,7 +15,7 @@ services:
 
     volumes:
       - pricepal_pgdata:/var/lib/postgresql
-      - ./pricepalBE/persistence/postgres/seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+      - ./pricepalBE/persistence/postgres/01-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
 
 volumes:
   pricepal_pgdata:

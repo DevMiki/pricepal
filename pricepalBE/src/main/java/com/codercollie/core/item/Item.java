@@ -32,6 +32,9 @@ public class Item {
     @Column(columnDefinition = "text")
     private String notes;
 
+    public Item() {
+    }
+
     public Item(Long id, String name, BigDecimal price, String supermarket, String notes) {
         this.id = id;
         this.name = name;

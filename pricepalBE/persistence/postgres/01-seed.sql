@@ -6,9 +6,9 @@ name TEXT NOT NULL,
 price NUMERIC(10,2) NOT NULL CHECK (price >= 0),
 supermarket TEXT,
 notes TEXT
-)
+);
 
-INSERT INTO item (name, price, supermaket, notes) VALUES
+INSERT INTO item (name, price, supermarket, notes) VALUES
   ('Milk 1L',                   1.19, 'Lidl',       'Semi-skimmed'),
   ('Whole Wheat Bread',         0.99, 'Aldi',       'Sliced, 500g'),
   ('Eggs 12-pack',              2.49, 'Carrefour',  'Free-range'),
