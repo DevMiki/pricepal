@@ -1,0 +1,54 @@
+package com.codercollie.core.item;
+
+import com.codercollie.core.item.dto.ItemCreateDTO;
+import com.codercollie.core.item.dto.ItemResponseDTO;
+import com.codercollie.core.item.dto.ItemUpdateDTO;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class ItemFacadeImpl implements ItemFacade{
+
+    private final ItemRepository itemRepository;
+    private final ItemMapper itemMapper;
+
+    public ItemFacadeImpl(ItemRepository itemRepository, ItemMapper itemMapper) {
+        this.itemRepository = itemRepository;
+        this.itemMapper = itemMapper;
+    }
+
+    @Override
+    public ItemResponseDTO createItem(ItemCreateDTO itemCreateDTO) {
+        final Item entityToSave = itemMapper.toEntity(itemCreateDTO);
+        final Item savedEntity = itemRepository.save(entityToSave);
+        return itemMapper.toResponse(savedEntity);
+    }
+
+    @Override
+    public ItemResponseDTO updateItem(Long id, ItemUpdateDTO itemUpdateDTO) {
+        final Item itemToUpdate = itemRepository.findById(id).orElseThrow();
+        itemMapper.updateEntityFromDTO(itemUpdateDTO, itemToUpdate);
+        final Item savedItem = itemRepository.save(itemToUpdate);
+        return itemMapper.toResponse(savedItem);
+    }
+
+    @Override
+    public void deleteItem(Long id) {
+        if (!itemRepository.existsById(id)){
+            throw new RuntimeException("non c'era nessuno lì con quell'id");
+        }
+        itemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ItemResponseDTO> fetchAllItems(){
+        final Sort sorting = Sort.by(Sort.Direction.ASC, "name");
+        final List<Item> items = itemRepository.findAll(sorting);
+        return itemMapper.toResponseList(items);
+    }
+
+}
