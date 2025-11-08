@@ -1,19 +1,24 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
 import { ItemResponseDTO } from '@models';
 import { ItemService } from '@services/item.service';
 import { Observable } from 'rxjs';
 
+type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AsyncPipe, JsonPipe],
+  imports: [AsyncPipe, MatTableModule, TitleCasePipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
 
   items$: Observable<ItemResponseDTO[]> | undefined;
+  
+  displayedColumns: ItemTableColumn[] = ['name', 'price', 'supermarket', 'notes'];
 
   constructor(private itemService: ItemService){}
 
