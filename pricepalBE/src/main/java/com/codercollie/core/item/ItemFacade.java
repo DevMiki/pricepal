@@ -3,6 +3,8 @@ package com.codercollie.core.item;
 import com.codercollie.core.item.dto.ItemCreateDTO;
 import com.codercollie.core.item.dto.ItemResponseDTO;
 import com.codercollie.core.item.dto.ItemUpdateDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -13,5 +15,5 @@ public interface ItemFacade {
 
     void deleteItem(Long id);
 
-    List<ItemResponseDTO> fetchAllItems();
+    Page<ItemResponseDTO> fetchAllItems(Pageable pageable);
 }

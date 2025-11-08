@@ -5,6 +5,9 @@ import com.codercollie.core.item.dto.ItemResponseDTO;
 import com.codercollie.core.item.dto.ItemUpdateDTO;
 import com.codercollie.error.ItemNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -46,10 +49,13 @@ public class ItemFacadeImpl implements ItemFacade{
     }
 
     @Override
-    public List<ItemResponseDTO> fetchAllItems(){
-        final Sort sorting = Sort.by(Sort.Direction.ASC, "name");
-        final List<Item> items = itemRepository.findAll(sorting);
-        return itemMapper.toResponseList(items);
+    public Page<ItemResponseDTO> fetchAllItems(Pageable pageable){
+        final Sort sorting = pageable.getSort().isSorted()
+                ? pageable.getSort()
+                : Sort.by(Sort.Direction.ASC, "name");
+        final Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sorting);
+        final Page<Item> items = itemRepository.findAll(pageRequest);
+        return items.map(itemMapper::toResponse);
     }
 
 }

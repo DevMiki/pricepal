@@ -4,6 +4,8 @@ import com.codercollie.core.item.dto.ItemCreateDTO;
 import com.codercollie.core.item.dto.ItemResponseDTO;
 import com.codercollie.core.item.dto.ItemUpdateDTO;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +38,8 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemResponseDTO> fetchAll(){
-        return itemFacade.fetchAllItems();
+    public Page<ItemResponseDTO> fetchAll(Pageable pageable){
+        return itemFacade.fetchAllItems(pageable);
     }
 
     @PutMapping("/{id}")
