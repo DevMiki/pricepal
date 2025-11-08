@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="(items$ | async) ?? []">
+<table mat-table [dataSource]="(items$ | async)?.content ?? []">
     @for (column of displayedColumns; track column) {
         <ng-container [matColumnDef]="column">
 

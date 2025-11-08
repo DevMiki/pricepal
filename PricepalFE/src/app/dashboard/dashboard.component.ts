@@ -1,7 +1,7 @@
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { ItemResponseDTO } from '@models';
+import { ItemResponseDTO, PageResponse } from '@models';
 import { ItemService } from '@services/item.service';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>
 })
 export class DashboardComponent implements OnInit {
 
-  items$: Observable<ItemResponseDTO[]> | undefined;
+  items$: Observable<PageResponse<ItemResponseDTO[]>> | undefined;
   
   displayedColumns: ItemTableColumn[] = ['name', 'price', 'supermarket', 'notes'];
 
