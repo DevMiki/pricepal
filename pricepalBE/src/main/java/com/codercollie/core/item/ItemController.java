@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("items")
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemFacade itemFacade;
