@@ -1,9 +1,9 @@
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { ItemResponseDTO, PageResponse } from '@models';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ItemResponseDTO } from '@models';
 import { ItemService } from '@services/item.service';
-import { Observable } from 'rxjs';
 import { ItemDataSource } from './item.datasource';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>
@@ -11,7 +11,7 @@ type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatTableModule, TitleCasePipe],
+  imports: [MatTableModule, TitleCasePipe, MatProgressBarModule, AsyncPipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
