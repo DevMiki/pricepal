@@ -26,7 +26,7 @@ export class ItemDataSource implements DataSource<ItemResponseDTO> {
         this.totalSubject.complete();
     }
 
-    loadItems(filter = '', sort = 'name,asc', page = 0, size = 3){
+    loadItems(filter = '', sort = 'name,asc', page = 0, size = 10){
         this.loadingSubject.next(true);
         this.itemService.fetchAllItems(filter, sort, page, size)
         .pipe(

@@ -46,14 +46,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private itemService = inject(ItemService);
   dataSource = new ItemDataSource(this.itemService);
 
-  query = {
+  protected query = {
     filter: '',
     sort: {
       active: 'name' as ItemTableColumn,
       direction: 'asc' as SortDirection,
     },
     page: 0,
-    size: 3,
+    size: 10,
   };
 
   ngOnInit(): void {
