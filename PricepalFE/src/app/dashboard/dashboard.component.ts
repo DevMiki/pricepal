@@ -13,6 +13,7 @@ import { ItemService } from '@services/item.service';
 import { ItemDataSource } from './item.datasource';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
@@ -25,6 +26,7 @@ type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
     MatProgressBarModule,
     AsyncPipe,
     MatSortModule,
+    MatPaginatorModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -32,6 +34,7 @@ type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 @UntilDestroy()
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: ItemTableColumn[] = [
     'name',
@@ -43,7 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private itemService = inject(ItemService);
   dataSource = new ItemDataSource(this.itemService);
 
-  private query = {
+  query = {
     filter: '',
     sort: {
       active: 'name' as ItemTableColumn,
@@ -54,12 +57,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
-    this.dataSource.loadItems(
-      this.query.filter,
-      `${this.query.sort.active},${this.query.sort.direction}`,
-      this.query.page,
-      this.query.size
-    );
+    this.loadItems();
   }
 
   ngAfterViewInit(): void {
@@ -69,13 +67,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         'asc') as SortDirection;
 
       this.query.page = 0;
+      this.paginator.firstPage();
 
-      this.dataSource.loadItems(
+      this.loadItems();
+    });
+
+    this.paginator.page
+    .pipe(untilDestroyed(this))
+    .subscribe((pageEvent: PageEvent) => {
+      this.query.page = pageEvent.pageIndex,
+      this.query.size = pageEvent.pageSize;
+      this.loadItems();
+    })
+  }
+
+  loadItems(): void {
+    this.dataSource.loadItems(
         this.query.filter,
         `${this.query.sort.active},${this.query.sort.direction}`,
         this.query.page,
         this.query.size
       );
-    });
   }
 }

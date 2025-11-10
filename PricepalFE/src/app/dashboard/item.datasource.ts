@@ -3,12 +3,17 @@ import { ItemResponseDTO, PageResponse } from "@models";
 import { ItemService } from "@services/item.service";
 import { BehaviorSubject, catchError, finalize, map, Observable, of } from "rxjs";
 
+type SlimPage<T> = Pick<PageResponse<T>, 'content' | 'totalElements'>
+
 export class ItemDataSource implements DataSource<ItemResponseDTO> {
 
     private itemSubject = new BehaviorSubject<ItemResponseDTO[]>([]);
 
     private loadingSubject = new BehaviorSubject<boolean>(false);
-    public loading$ = this.loadingSubject.asObservable();
+    public isLoading$ = this.loadingSubject.asObservable();
+
+    private totalSubject = new BehaviorSubject<number>(0);
+    public totalItems$ = this.totalSubject.asObservable();
 
     constructor(private readonly itemService: ItemService){}
 
@@ -18,18 +23,25 @@ export class ItemDataSource implements DataSource<ItemResponseDTO> {
     disconnect(_: CollectionViewer): void {
         this.itemSubject.complete();
         this.loadingSubject.complete();
+        this.totalSubject.complete();
     }
 
     loadItems(filter = '', sort = 'name,asc', page = 0, size = 3){
         this.loadingSubject.next(true);
         this.itemService.fetchAllItems(filter, sort, page, size)
         .pipe(
-            map((pageResponse: PageResponse<ItemResponseDTO>) => pageResponse.content),
-            catchError(() => of([])),
+            map((pageResponse: PageResponse<ItemResponseDTO>) : SlimPage<ItemResponseDTO> => 
+                ({
+                    content: pageResponse.content,
+                    totalElements: pageResponse.totalElements
+                })),
+            catchError(() => of({content: [], totalElements: 0} as SlimPage<ItemResponseDTO>)),
             finalize(() => this.loadingSubject.next(false))
         )
-        .subscribe((content: ItemResponseDTO[]) => {
-            this.itemSubject.next(content)}
+        .subscribe(({content, totalElements}) => {
+            this.itemSubject.next(content)
+            this.totalSubject.next(totalElements)
+        }
         )
     }
     
