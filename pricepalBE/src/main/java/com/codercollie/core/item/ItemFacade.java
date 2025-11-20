@@ -1,5 +1,6 @@
 package com.codercollie.core.item;
 
+import com.codercollie.common.PageResponse;
 import com.codercollie.core.item.dto.ItemCreateDTO;
 import com.codercollie.core.item.dto.ItemResponseDTO;
 import com.codercollie.core.item.dto.ItemUpdateDTO;
@@ -13,5 +14,5 @@ public interface ItemFacade {
 
     void deleteItem(Long id);
 
-    Page<ItemResponseDTO> fetchAllItems(Pageable pageable);
+    PageResponse<ItemResponseDTO> fetchAllItems(Pageable pageable);
 }

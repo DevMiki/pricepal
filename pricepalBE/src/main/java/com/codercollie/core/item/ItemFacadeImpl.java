@@ -1,5 +1,6 @@
 package com.codercollie.core.item;
 
+import com.codercollie.common.PageResponse;
 import com.codercollie.core.item.dto.ItemCreateDTO;
 import com.codercollie.core.item.dto.ItemResponseDTO;
 import com.codercollie.core.item.dto.ItemUpdateDTO;
@@ -49,13 +50,14 @@ public class ItemFacadeImpl implements ItemFacade{
     }
 
     @Override
-    public Page<ItemResponseDTO> fetchAllItems(Pageable pageable){
+    public PageResponse<ItemResponseDTO> fetchAllItems(Pageable pageable){
         final Sort sorting = pageable.getSort().isSorted()
                 ? pageable.getSort()
                 : Sort.by(Sort.Direction.ASC, "name");
         final Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sorting);
         final Page<Item> items = itemRepository.findAll(pageRequest);
-        return items.map(itemMapper::toResponse);
+        final Page<ItemResponseDTO> itemPage = items.map(itemMapper::toResponse);
+        return PageResponse.from(itemPage);
     }
 
 }
