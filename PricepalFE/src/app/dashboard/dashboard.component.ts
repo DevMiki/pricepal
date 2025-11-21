@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ItemResponseDTO } from '@models';
+import { ItemFilterCriteriaRequest, ItemResponseDTO } from '@models';
 import { ItemService } from '@services/item.service';
 import { ItemDataSource } from './item.datasource';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   dataSource = new ItemDataSource(this.itemService);
 
   protected query = {
-    filter: '',
     sort: {
       active: 'name' as ItemTableColumn,
       direction: 'asc' as SortDirection,
@@ -58,6 +57,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadItems();
+  }
+
+  protected filters: ItemFilterCriteriaRequest = {
+    nameContains: null,
+    supermarketContains: null,
+    notesContains: null,
+    priceEquals: null,
+    priceMin: null,
+    priceMax: null
   }
 
   ngAfterViewInit(): void {
@@ -83,7 +91,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   loadItems(): void {
     this.dataSource.loadItems(
-        this.query.filter,
+        this.filters,
         `${this.query.sort.active},${this.query.sort.direction}`,
         this.query.page,
         this.query.size

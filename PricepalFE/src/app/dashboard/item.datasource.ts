@@ -1,5 +1,5 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
-import { ItemResponseDTO, PageResponse } from "@models";
+import { ItemFilterCriteriaRequest, ItemResponseDTO, PageResponse } from "@models";
 import { ItemService } from "@services/item.service";
 import { BehaviorSubject, catchError, finalize, map, Observable, of } from "rxjs";
 
@@ -26,9 +26,9 @@ export class ItemDataSource implements DataSource<ItemResponseDTO> {
         this.totalSubject.complete();
     }
 
-    loadItems(filter = '', sort = 'name,asc', page = 0, size = 10){
+    loadItems(filters: ItemFilterCriteriaRequest = {}, sort = 'name,asc', page = 0, size = 10){
         this.loadingSubject.next(true);
-        this.itemService.fetchAllItems(filter, sort, page, size)
+        this.itemService.fetchAllItems(filters, sort, page, size)
         .pipe(
             map((pageResponse: PageResponse<ItemResponseDTO>) : SlimPage<ItemResponseDTO> => 
                 ({
