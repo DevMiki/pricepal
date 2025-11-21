@@ -10,9 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -50,12 +49,14 @@ public class ItemFacadeImpl implements ItemFacade{
     }
 
     @Override
-    public PageResponse<ItemResponseDTO> fetchAllItems(Pageable pageable){
+    public PageResponse<ItemResponseDTO> fetchAllItems(ItemFilterCriteria itemFilterCriteria, Pageable pageable){
         final Sort sorting = pageable.getSort().isSorted()
                 ? pageable.getSort()
                 : Sort.by(Sort.Direction.ASC, "name");
         final Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sorting);
-        final Page<Item> items = itemRepository.findAll(pageRequest);
+
+        final Specification<Item> itemSpecification = ItemSpecifications.fromCriteria(itemFilterCriteria);
+        final Page<Item> items = itemRepository.findAll(itemSpecification, pageRequest);
         final Page<ItemResponseDTO> itemPage = items.map(itemMapper::toResponse);
         return PageResponse.from(itemPage);
     }

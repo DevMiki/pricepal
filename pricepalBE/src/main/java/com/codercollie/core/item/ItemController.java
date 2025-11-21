@@ -39,8 +39,8 @@ public class ItemController {
     }
 
     @GetMapping
-    public PageResponse<ItemResponseDTO> fetchAll(Pageable pageable){
-        return itemFacade.fetchAllItems(pageable);
+    public PageResponse<ItemResponseDTO> fetchAll(ItemFilterCriteria itemFilterCriteria, Pageable pageable){
+        return itemFacade.fetchAllItems(itemFilterCriteria, pageable);
     }
 
     @PutMapping("/{id}")

@@ -14,5 +14,5 @@ public interface ItemFacade {
 
     void deleteItem(Long id);
 
-    PageResponse<ItemResponseDTO> fetchAllItems(Pageable pageable);
+    PageResponse<ItemResponseDTO> fetchAllItems(ItemFilterCriteria itemFilterCriteria, Pageable pageable);
 }
