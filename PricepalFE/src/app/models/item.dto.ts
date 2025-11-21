@@ -31,3 +31,12 @@ export interface PageResponse<T> {
     last: boolean;
     empty: boolean;
 }
+
+export interface ItemFilterCriteriaRequest {
+    nameContains?: string | null;
+    supermarketContains?: string | null;
+    notesContains?: string | null;
+    priceEquals?: number | null;
+    priceMin?: number | null;
+    priceMax?: number | null;
+}
