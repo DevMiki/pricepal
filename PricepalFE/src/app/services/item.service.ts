@@ -13,7 +13,7 @@ export class ItemService {
 
   constructor(private httpClient: HttpClient) { }
 
-  fetchAllItems(filters: ItemFilterCriteriaRequest = {}, sort:string = 'name,asc', page:number = 0, size:number = 3): Observable<PageResponse<ItemResponseDTO>> {
+  fetchAllItems(sort:string = 'name,asc', page:number = 0, size:number = 3, filters: ItemFilterCriteriaRequest = {}): Observable<PageResponse<ItemResponseDTO>> {
     let params = new HttpParams()
     .set('sort', sort)
     .set('page', page.toString())

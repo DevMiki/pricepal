@@ -104,10 +104,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   loadItems(): void {
     this.dataSource.loadItems(
-        this.filters,
-        `${this.query.sort.active},${this.query.sort.direction}`,
-        this.query.page,
-        this.query.size
+      `${this.query.sort.active},${this.query.sort.direction}`,
+      this.query.page,
+      this.query.size,
+      this.filters
       );
   }
 }
