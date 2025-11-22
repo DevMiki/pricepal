@@ -91,6 +91,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
   }
 
+  onFiltersChange(newFilters: ItemFilterCriteriaRequest): void {
+    this.filters = newFilters;
+    this.resetPage();
+    this.loadItems();
+  }
+
+  private resetPage(): void {
+    this.query.page = 0;
+    this.paginator?.firstPage();
+  }
+
   loadItems(): void {
     this.dataSource.loadItems(
         this.filters,
