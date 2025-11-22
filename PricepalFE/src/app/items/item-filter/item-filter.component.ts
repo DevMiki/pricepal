@@ -8,9 +8,9 @@ type FiltersFormValue = {
   nameContains: string;
   supermarketContains: string;
   notesContains: string;
-  priceEquals: string;
-  priceMin: string;
-  priceMax: string;
+  priceEquals: string | number;
+  priceMin: string | number;
+  priceMax: string | number;
 };
 
 @UntilDestroy()
@@ -62,8 +62,8 @@ export class ItemFilterComponent {
     return trimmedValue === '' ? null : trimmedValue;
   }
 
-  private toOptionalNumber(value: string): number | null {
-    const trimmedValue = value.trim();
+  private toOptionalNumber(value: string | number): number | null {
+    const trimmedValue = String(value).trim();
     if (trimmedValue === '') {
       return null;
     }
