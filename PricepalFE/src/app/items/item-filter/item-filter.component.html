@@ -29,40 +29,40 @@
         formControlName="notesContains"
       />
     </div>
+  </div>
 
-    <div class="filters-row">
-      <div class="filter-group">
-        <label for="priceEquals">Price equals to</label>
+  <div class="filters-row">
+    <div class="filter-group">
+      <label for="priceEquals">Price equals to</label>
+      <input
+        id="priceEquals"
+        type="text"
+        placeholder="Equals to.."
+        formControlName="priceEquals"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label>Price range</label>
+      <div class="price-range">
         <input
-          id="priceEquals"
+          id="priceMin"
           type="text"
-          placeholder="Equals to.."
-          formControlName="priceEquals"
+          placeholder="Min"
+          formControlName="priceMin"
         />
       </div>
-
-      <div class="filter-group">
-        <label for="nameContains">Price range</label>
-        <div class="price-range">
-            <input 
-            id="priceMin"
-            type="text"
-            placeholder="Min"
-            formControlName="priceMin"
-            />
-        </div>
-        <span>-</span>
-         <input 
-            id="priceMax"
-            type="text"
-            placeholder="Max"
-            formControlName="priceMax"
-            />
-      </div>
+      <span>-</span>
+      <input
+        id="priceMax"
+        type="text"
+        placeholder="Max"
+        formControlName="priceMax"
+      />
     </div>
+  </div>
 
-    <div class="filter-actions">
-        <button type="button" (click)="onReset()">Reset</button>
-    </div>
+  <div class="filter-actions">
+    <button type="button" (click)="onReset()">Reset</button>
   </div>
 </form>
