@@ -1,8 +1,8 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ItemFilterCriteriaRequest } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { debounceTime, filter } from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 type FiltersFormValue = {
   nameContains: string;
@@ -17,7 +17,7 @@ type FiltersFormValue = {
 @Component({
   selector: 'app-item-filter',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './item-filter.component.html',
   styleUrl: './item-filter.component.scss',
 })

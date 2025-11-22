@@ -14,6 +14,7 @@ import { ItemDataSource } from './item.datasource';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ItemFilterComponent } from "app/items/item-filter/item-filter.component";
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
@@ -26,8 +27,9 @@ type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
     MatProgressBarModule,
     AsyncPipe,
     MatSortModule,
-    MatPaginatorModule
-  ],
+    MatPaginatorModule,
+    ItemFilterComponent
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
