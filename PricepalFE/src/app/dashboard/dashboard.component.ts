@@ -13,16 +13,22 @@ import { ItemService } from '@services/item.service';
 import { ItemDataSource } from './item.datasource';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { ItemFilterComponent } from "app/items/item-filter/item-filter.component";
-import { MatChipsModule } from '@angular/material/chips'
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
+import { ItemFilterComponent } from 'app/items/item-filter/item-filter.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
 type FilterChip = {
   label: string;
   value: string;
-}
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +42,9 @@ type FilterChip = {
     MatPaginatorModule,
     ItemFilterComponent,
     MatChipsModule,
-],
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -81,12 +89,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
 
     this.paginator.page
-    .pipe(untilDestroyed(this))
-    .subscribe((pageEvent: PageEvent) => {
-      this.query.page = pageEvent.pageIndex,
-      this.query.size = pageEvent.pageSize;
-      this.loadItems();
-    })
+      .pipe(untilDestroyed(this))
+      .subscribe((pageEvent: PageEvent) => {
+        (this.query.page = pageEvent.pageIndex),
+          (this.query.size = pageEvent.pageSize);
+        this.loadItems();
+      });
   }
 
   protected filters: ItemFilterCriteriaRequest = {
@@ -95,40 +103,46 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     notesContains: null,
     priceEquals: null,
     priceMin: null,
-    priceMax: null
-  }
+    priceMax: null,
+  };
 
   protected activeFilterChips: FilterChip[] = [];
 
   private updateActiveFilterChips(): void {
     const chips: FilterChip[] = [];
 
-    if(this.filters.nameContains){
-      chips.push({label: 'Name', value: this.filters.nameContains})
+    if (this.filters.nameContains) {
+      chips.push({ label: 'Name', value: this.filters.nameContains });
     }
 
-    if(this.filters.supermarketContains){
-      chips.push({label: 'Supermarket', value: this.filters.supermarketContains})
+    if (this.filters.supermarketContains) {
+      chips.push({
+        label: 'Supermarket',
+        value: this.filters.supermarketContains,
+      });
     }
 
-    if(this.filters.notesContains){
-      chips.push({label: 'Notes', value: this.filters.notesContains})
+    if (this.filters.notesContains) {
+      chips.push({ label: 'Notes', value: this.filters.notesContains });
     }
 
-    if(this.filters.priceEquals != null){
-      chips.push({label: 'Price', value: `= ${this.filters.priceEquals}`})
+    if (this.filters.priceEquals != null) {
+      chips.push({ label: 'Price', value: `= ${this.filters.priceEquals}` });
     } else {
-      if(this.filters.priceMin != null){
-        chips.push({label: 'Price min', value: `= ${this.filters.priceMin}`})
+      if (this.filters.priceMin != null) {
+        chips.push({ label: 'Price min', value: `= ${this.filters.priceMin}` });
       }
-      if(this.filters.priceMax != null){
-        chips.push({label: 'Price max', value: `= ${this.filters.priceMax}`})
+      if (this.filters.priceMax != null) {
+        chips.push({ label: 'Price max', value: `= ${this.filters.priceMax}` });
       }
     }
 
     this.activeFilterChips = chips;
   }
 
+  onRemoveFilter(filterChip: FilterChip) {
+    console.log('removing filter:' + JSON.stringify(filterChip));
+  }
 
   onFiltersChange(newFilters: ItemFilterCriteriaRequest): void {
     this.filters = newFilters;
@@ -148,6 +162,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.query.page,
       this.query.size,
       this.filters
-      );
+    );
   }
 }

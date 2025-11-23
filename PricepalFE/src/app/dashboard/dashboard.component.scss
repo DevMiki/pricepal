@@ -37,41 +37,40 @@ app-item-filter {
   }
 }
 
-
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 
-    .mat-mdc-header-cell {
-        background-color: var(--light-bg);
-        color: var(--dark-text);
-        font-weight: 600;
-        font-size: 0.875rem;
-        padding: 1rem;
-        border-bottom: 1px solid var(--border-color);
-    }
+  .mat-mdc-header-cell {
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
 
-    .mat-mdc-cell {
-        color: var(--grey-text);
-        font-size: 0.9rem;
-        padding: 1rem;
-        border-bottom: 1px solid var(--border-color);
-    }
+  .mat-mdc-cell {
+    color: var(--grey-text);
+    font-size: 0.9rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
 
-    .mat-mdc-row:hover {
-        background-color: #f1f5f9;
-    }
+  .mat-mdc-row:hover {
+    background-color: #f1f5f9;
+  }
 }
 
 mat-paginator {
-    background: white;
-    border-top: 1px solid var(--border-color);
-    color: var(--grey-text);
-    font-size: 0.875rem;
+  background: white;
+  border-top: 1px solid var(--border-color);
+  color: var(--grey-text);
+  font-size: 0.875rem;
 }
 
 .active-filters {
-  display:flex;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
@@ -80,4 +79,17 @@ mat-paginator {
 .active-filters-label {
   font-weight: 500;
   white-space: nowrap;
+}
+
+.filter-chip {
+  --mdc-chip-label-text-size: 0.85rem;
+
+  mat-icon {
+    opacity: 0.6;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

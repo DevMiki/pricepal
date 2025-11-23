@@ -4,16 +4,17 @@
   <div class="results-card">
     @if (dataSource.isLoading$ | async) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    } 
-    
-    @if (activeFilterChips.length > 0){
+    } @if (activeFilterChips.length > 0){
     <div class="active-filters">
       <span class="active-filters-label">Active filters:</span>
     </div>
 
     <mat-chip-set>
       @for (chip of activeFilterChips; track chip.label + chip.value) {
-      <mat-chip>{{ chip.label }}: {{ chip.value }}</mat-chip>
+      <mat-chip class="filter-chip" (removed)="onRemoveFilter(chip)"
+        >{{ chip.label }}: {{ chip.value }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
       }
     </mat-chip-set>
     }
