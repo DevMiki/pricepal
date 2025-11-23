@@ -15,8 +15,14 @@ import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ItemFilterComponent } from "app/items/item-filter/item-filter.component";
+import { MatChipsModule } from '@angular/material/chips'
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
+
+type FilterChip = {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +34,8 @@ type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
     AsyncPipe,
     MatSortModule,
     MatPaginatorModule,
-    ItemFilterComponent
+    ItemFilterComponent,
+    MatChipsModule,
 ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -61,15 +68,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.loadItems();
   }
 
-  protected filters: ItemFilterCriteriaRequest = {
-    nameContains: null,
-    supermarketContains: null,
-    notesContains: null,
-    priceEquals: null,
-    priceMin: null,
-    priceMax: null
-  }
-
   ngAfterViewInit(): void {
     this.sort.sortChange.pipe(untilDestroyed(this)).subscribe((sortEvent) => {
       this.query.sort.active = sortEvent.active as ItemTableColumn;
@@ -91,8 +89,50 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
   }
 
+  protected filters: ItemFilterCriteriaRequest = {
+    nameContains: null,
+    supermarketContains: null,
+    notesContains: null,
+    priceEquals: null,
+    priceMin: null,
+    priceMax: null
+  }
+
+  protected activeFilterChips: FilterChip[] = [];
+
+  private updateActiveFilterChips(): void {
+    const chips: FilterChip[] = [];
+
+    if(this.filters.nameContains){
+      chips.push({label: 'Name', value: this.filters.nameContains})
+    }
+
+    if(this.filters.supermarketContains){
+      chips.push({label: 'Supermarket', value: this.filters.supermarketContains})
+    }
+
+    if(this.filters.notesContains){
+      chips.push({label: 'Notes', value: this.filters.notesContains})
+    }
+
+    if(this.filters.priceEquals != null){
+      chips.push({label: 'Price', value: `= ${this.filters.priceEquals}`})
+    } else {
+      if(this.filters.priceMin != null){
+        chips.push({label: 'Price min', value: `= ${this.filters.priceMin}`})
+      }
+      if(this.filters.priceMax != null){
+        chips.push({label: 'Price max', value: `= ${this.filters.priceMax}`})
+      }
+    }
+
+    this.activeFilterChips = chips;
+  }
+
+
   onFiltersChange(newFilters: ItemFilterCriteriaRequest): void {
     this.filters = newFilters;
+    this.updateActiveFilterChips();
     this.resetPage();
     this.loadItems();
   }
