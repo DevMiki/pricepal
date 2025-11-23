@@ -1,11 +1,12 @@
-<form class="filters-container" [formGroup]="form">
+<form class="filters-container" [formGroup]="form" role="search">
   <div class="filters-grid">
     <div class="filter-group">
       <label for="nameContains">Name</label>
       <input
         id="nameContains"
+        name="nameContains"
         type="text"
-        placeholder="Contains.."
+        placeholder="Contains…"
         formControlName="nameContains"
       />
     </div>
@@ -14,8 +15,9 @@
       <label for="supermarketContains">Supermarket</label>
       <input
         id="supermarketContains"
+        name="supermarketContains"
         type="text"
-        placeholder="Contains.."
+        placeholder="Contains…"
         formControlName="supermarketContains"
       />
     </div>
@@ -24,8 +26,9 @@
       <label for="notesContains">Notes</label>
       <input
         id="notesContains"
+        name="notesContains"
         type="text"
-        placeholder="Contains.."
+        placeholder="Contains…"
         formControlName="notesContains"
       />
     </div>
@@ -34,8 +37,11 @@
       <label for="priceEquals">Price equals to</label>
       <input
         id="priceEquals"
+        name="priceEquals"
         type="number"
-        placeholder="Equals to.."
+        inputmode="decimal"
+        step="0.1"
+        placeholder="Equals to…"
         formControlName="priceEquals"
       />
     </div>
@@ -45,7 +51,10 @@
       <div class="price-range">
         <input
           id="priceMin"
+          name="priceMin"
           type="number"
+          inputmode="decimal"
+          step="0.1"
           placeholder="Min"
           formControlName="priceMin"
         />
@@ -53,7 +62,10 @@
         <span>-</span>
         <input
           id="priceMax"
+          name="priceMax"
           type="number"
+          inputmode="decimal"
+          step="0.1"
           placeholder="Max"
           formControlName="priceMax"
         />
