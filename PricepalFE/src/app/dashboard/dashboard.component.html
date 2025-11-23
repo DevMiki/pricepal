@@ -1,28 +1,32 @@
-<app-item-filter (filtersChange)="onFiltersChange($event)"></app-item-filter>
+<div class="main-container">
+  <app-item-filter (filtersChange)="onFiltersChange($event)"></app-item-filter>
 
-<table mat-table matSort [dataSource]="dataSource">
-    @for (column of displayedColumns; track column) {
-        <ng-container [matColumnDef]="column">
-
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column | titlecase }}</th>
-            <td mat-cell *matCellDef="let item">{{ item[column] }}</td>
-
-        </ng-container>
+  <div class="results-card">
+    @if (dataSource.isLoading$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     }
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+    <table mat-table matSort [dataSource]="dataSource">
+      @for (column of displayedColumns; track column) {
+      <ng-container [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ column | titlecase }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item[column] }}</td>
+      </ng-container>
+      }
 
-<mat-paginator
-[length]="(dataSource.totalItems$ | async) ?? 0"
-[pageSize]="query.size"
-[pageIndex]="query.page"
-[pageSizeOptions]="[3,5,10,25]"
-showFirstLastButtons
->
-</mat-paginator>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 
-@if (dataSource.isLoading$ | async) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-}
+    <mat-paginator
+      [length]="(dataSource.totalItems$ | async) ?? 0"
+      [pageSize]="query.size"
+      [pageIndex]="query.page"
+      [pageSizeOptions]="[3, 5, 10, 25]"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+:host {
+  display: block;
+  width: 100%;
+
+  --border-color: #e2e8f0;
+  --light-bg: #f8fafc;
+  --grey-text: #64748b;
+  --dark-text: #1e293b;
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+app-item-filter {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.results-card {
+  position: relative;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  mat-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 10;
+  }
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .mat-mdc-header-cell {
+        background-color: var(--light-bg);
+        color: var(--dark-text);
+        font-weight: 600;
+        font-size: 0.875rem;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .mat-mdc-cell {
+        color: var(--grey-text);
+        font-size: 0.9rem;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .mat-mdc-row:hover {
+        background-color: #f1f5f9;
+    }
+}
+
+mat-paginator {
+    background: white;
+    border-top: 1px solid var(--border-color);
+    color: var(--grey-text);
+    font-size: 0.875rem;
+}
