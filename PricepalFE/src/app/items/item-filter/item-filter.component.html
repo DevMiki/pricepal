@@ -1,5 +1,5 @@
 <form class="filters-container" [formGroup]="form">
-  <div class="filters-row">
+  <div class="filters-grid">
     <div class="filter-group">
       <label for="nameContains">Name</label>
       <input
@@ -29,9 +29,7 @@
         formControlName="notesContains"
       />
     </div>
-  </div>
 
-  <div class="filters-row">
     <div class="filter-group">
       <label for="priceEquals">Price equals to</label>
       <input
@@ -42,7 +40,7 @@
       />
     </div>
 
-    <div class="filter-group">
+    <div class="filter-group price-range-group">
       <label>Price range</label>
       <div class="price-range">
         <input
@@ -51,18 +49,19 @@
           placeholder="Min"
           formControlName="priceMin"
         />
-      </div>
-      <span>-</span>
-      <input
-        id="priceMax"
-        type="number"
-        placeholder="Max"
-        formControlName="priceMax"
-      />
-    </div>
-  </div>
 
-  <div class="filter-actions">
-    <button type="button" (click)="onReset()">Reset</button>
+        <span>-</span>
+        <input
+          id="priceMax"
+          type="number"
+          placeholder="Max"
+          formControlName="priceMax"
+        />
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" (click)="onReset()">Reset</button>
+    </div>
   </div>
 </form>
