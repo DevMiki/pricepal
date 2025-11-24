@@ -6,6 +6,10 @@
   --light-bg: #f8fafc;
   --grey-text: #64748b;
   --dark-text: #1e293b;
+
+  --item-button-box-shadow-light: #0ea5e9;
+  --item-button-box-shadow-dark: #0284c7;
+  --item-button-background: #38bdf8;
 }
 
 .main-container {
@@ -98,4 +102,62 @@ mat-paginator {
       opacity: 1;
     }
   }
+}
+
+.add-item-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 120px;
+  height: 40px;
+
+  border: none;
+  padding: 0 20px;
+
+  background-color: var(--item-button-background);      
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 9999px;            
+
+  box-shadow: 4px 4px 0px var(--item-button-box-shadow-light);   
+  transition: all 0.25s ease-out;
+
+  .button-text {
+    font-weight: 600;
+  }
+}
+
+.svg {
+  width: 14px;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  fill: #ffffff;
+  transition: all 0.25s ease-out;
+}
+
+.add-item-button:hover {
+  color: transparent;
+  background-color: var(--item-button-box-shadow-light);        
+  box-shadow: 4px 4px 0px var(--item-button-box-shadow-dark);  
+}
+
+.add-item-button:hover .svg {
+  right: 50%;
+  transform: translateX(50%);
+  margin: 0;
+}
+
+.add-item-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--item-button-box-shadow-light);
+}
+
+.add-item-button-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.6rem;
 }
