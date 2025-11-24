@@ -4,7 +4,7 @@ import { ItemFilterCriteriaRequest } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime } from 'rxjs';
 
-type FiltersFormValue = {
+export type FiltersFormValue = {
   nameContains: string;
   supermarketContains: string;
   notesContains: string;
@@ -84,5 +84,9 @@ export class ItemFilterComponent {
       priceMin: this.toOptionalNumber(filtersFormValue.priceMin),
       priceMax: this.toOptionalNumber(filtersFormValue.priceMax),
     };
+  }
+
+  clearFilterField(field: keyof FiltersFormValue){
+    this.form.get(field)?.setValue('')
   }
 }

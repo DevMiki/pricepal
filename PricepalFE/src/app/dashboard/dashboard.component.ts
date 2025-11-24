@@ -18,7 +18,7 @@ import {
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
-import { ItemFilterComponent } from 'app/items/item-filter/item-filter.component';
+import { FiltersFormValue, ItemFilterComponent } from 'app/items/item-filter/item-filter.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,6 +53,7 @@ type FilterChip = {
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(ItemFilterComponent) itemFilterComponent!: ItemFilterComponent;
 
   displayedColumns: ItemTableColumn[] = [
     'name',
@@ -144,6 +145,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   onRemoveFilter(filterChip: FilterChip) {
     this.filters = {...this.filters, [filterChip.key]:null}
+    this.itemFilterComponent.clearFilterField(filterChip.key as keyof FiltersFormValue)
     console.log(this.filters)
     this.updateActiveFilterChips();
     this.resetPage();
