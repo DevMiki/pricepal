@@ -1,1 +1,34 @@
-<p>add-item works!</p>
+<div class="add-item-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="add-item-form">
+    @for (field of fields; track field.key) {
+    <mat-form-field appearance="outline">
+      <mat-label>{{ field.label }}</mat-label>
+
+      @if (field.type === 'textarea') {
+      <textarea matInput rows="3" [formControlName]="field.key"></textarea>
+      } @else {
+      <input
+        matInput
+        [type]="field.type || 'text'"
+        [formControlName]="field.key"
+        [min]="field.min ?? null"
+        [step]="field.step ?? null"
+      />
+      } @if (form.get(field.key)?.touched &&
+      form.get(field.key)?.hasError('required')) {
+      <mat-error>{{ field.label }} is required </mat-error>
+      } @if (field.key === 'price' && form.get('price')?.touched &&
+      form.get('price')?.hasError('min')) {
+      <mat-error>Price cannot be negative</mat-error>
+      }
+    </mat-form-field>
+    }
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button type="button" routerLink="/dashboard">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
