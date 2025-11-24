@@ -84,6 +84,12 @@ mat-paginator {
 .filter-chip {
   --mdc-chip-label-text-size: 0.85rem;
 
+  mat-icon[matChipRemove] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 18px;
+  }
+
   mat-icon {
     opacity: 0.6;
     transition: opacity 0.2s;

@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
 type FilterChip = {
+  key: string;
   label: string;
   value: string;
 };
@@ -112,28 +113,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const chips: FilterChip[] = [];
 
     if (this.filters.nameContains) {
-      chips.push({ label: 'Name', value: this.filters.nameContains });
+      chips.push({ key: 'nameContains', label: 'Name', value: this.filters.nameContains });
     }
 
     if (this.filters.supermarketContains) {
       chips.push({
+        key: 'supermarketContains',
         label: 'Supermarket',
         value: this.filters.supermarketContains,
       });
     }
 
     if (this.filters.notesContains) {
-      chips.push({ label: 'Notes', value: this.filters.notesContains });
+      chips.push({ key: 'notesContains', label: 'Notes', value: this.filters.notesContains });
     }
 
     if (this.filters.priceEquals != null) {
-      chips.push({ label: 'Price', value: `= ${this.filters.priceEquals}` });
+      chips.push({ key: 'priceEquals', label: 'Price', value: `= ${this.filters.priceEquals}` });
     } else {
       if (this.filters.priceMin != null) {
-        chips.push({ label: 'Price min', value: `= ${this.filters.priceMin}` });
+        chips.push({ key: 'priceMin', label: 'Price min', value: `= ${this.filters.priceMin}` });
       }
       if (this.filters.priceMax != null) {
-        chips.push({ label: 'Price max', value: `= ${this.filters.priceMax}` });
+        chips.push({ key: 'priceMax', label: 'Price max', value: `= ${this.filters.priceMax}` });
       }
     }
 
@@ -141,7 +143,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   onRemoveFilter(filterChip: FilterChip) {
-    console.log('removing filter:' + JSON.stringify(filterChip));
+    this.filters = {...this.filters, [filterChip.key]:null}
+    console.log(this.filters)
+    this.updateActiveFilterChips();
+    this.resetPage();
+    this.loadItems();
   }
 
   onFiltersChange(newFilters: ItemFilterCriteriaRequest): void {
