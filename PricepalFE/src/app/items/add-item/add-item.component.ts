@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
+import { ItemService } from '@services/item.service';
 
 type FieldKey = 'name' | 'price' | 'supermarket' | 'notes'
 
@@ -16,7 +17,10 @@ type FieldKey = 'name' | 'price' | 'supermarket' | 'notes'
 })
 export class AddItemComponent {
 
+  private itemService = inject(ItemService)
+  private router = inject(Router)
   private formBuilder = inject(FormBuilder)
+  isSubmitting = false;
 
   fields: Array<{
     key: FieldKey,
@@ -43,5 +47,20 @@ export class AddItemComponent {
     if(this.form.invalid){
       this.form.markAllAsTouched()
     }
+
+    if(this.isSubmitting) return;
+
+    this.isSubmitting = true;
+    this.form.disable();
+
+    this.itemService.createItem(this.form.value).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard'])
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        this.form.enable();
+      }
+    })
   }
 }
