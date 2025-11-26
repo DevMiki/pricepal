@@ -36,7 +36,7 @@ type FilterChip = {
 };
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'all-items-table',
   standalone: true,
   imports: [
     MatTableModule,
@@ -50,11 +50,11 @@ type FilterChip = {
     MatIconModule,
     MatButtonModule,
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+  templateUrl: './all-items-table.component.html',
+  styleUrl: './all-items-table.component.scss',
 })
 @UntilDestroy()
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class AllItemsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(ItemFilterComponent) itemFilterComponent!: ItemFilterComponent;
