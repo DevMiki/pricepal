@@ -1,30 +1,96 @@
 :host {
-    display: block;
+  display: block;
+  --nav-bg-1: #fbfdff;
+  --nav-bg-2: #e6f1ff;
+  --nav-border: #d3e2f7;
+  --nav-shadow: 0 8px 22px rgba(15, 76, 168, 0.12);
+  --pill-bg: #ffffff;
+  --pill-border: rgba(134, 174, 230, 0.25);
+  --link: #0d4fa6;
+  --link-hover-bg: #eef4ff;
+  --link-active-bg: linear-gradient(135deg, #5ba9ff, #3e84f7);
+  --link-active: #ffffff;
+  --link-focus: #9fc6ff;
 }
 
+$nav-link-transition: background 0.2s ease,
+                      color 0.2s ease,
+                      box-shadow 0.2s ease,
+                      transform 0.2s ease,
+                      border-color 0.2s ease;
+
 .app-navbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
-    background-color: #fff;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(120deg, var(--nav-bg-1), var(--nav-bg-2));
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--nav-shadow);
+  backdrop-filter: blur(6px) saturate(1.05);
 }
 
 .logo img {
-    max-width: 60px;
-    height: auto;
+  max-width: 60px;
+  height: auto;
 }
 
 .nav-spacer {
-    flex: 1;
+  flex: 1;
 }
 
 .app-content {
-    display: block;
-    padding: 1rem;
+  display: block;
+  padding: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.9rem;
+  font-weight: 600;
+  align-items: center;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    color: var(--link);
+    text-decoration: none;
+    padding: 0.5rem 0.95rem;
+    border-radius: 12px;
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    transition: $nav-link-transition;
+    overflow: hidden;
+
+    &:hover {
+      background: var(--link-hover-bg);
+      border-color: rgba(44, 122, 252, 0.28);
+      box-shadow: 0 6px 18px rgba(44, 122, 252, 0.16);
+      transform: translateY(-1px);
+    }
+
+    &.active {
+      background: var(--link-active-bg);
+      color: var(--link-active);
+      border-color: transparent;
+      box-shadow: 0 10px 22px rgba(45, 127, 249, 0.2);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--link-focus);
+      outline-offset: 3px;
+    }
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 0.45rem;
+  }
 }
