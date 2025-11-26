@@ -10,7 +10,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ItemFilterCriteriaRequest, ItemResponseDTO } from '@models';
 import { ItemService } from '@services/item.service';
-import { ItemDataSource } from './item.datasource';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -26,6 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { ItemDataSource } from './item.datasource';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
