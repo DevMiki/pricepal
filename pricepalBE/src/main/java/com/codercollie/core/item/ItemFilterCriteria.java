@@ -8,7 +8,8 @@ public record ItemFilterCriteria(
         BigDecimal priceMin,
         BigDecimal priceMax,
         String supermarketContains,
-        String notesContains
+        String notesContains,
+        boolean cheapestOnly
 ) {
 
     public boolean hasNameFilter(){

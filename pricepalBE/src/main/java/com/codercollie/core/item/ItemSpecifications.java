@@ -1,5 +1,7 @@
 package com.codercollie.core.item;
 
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
@@ -8,11 +10,10 @@ import java.util.Objects;
 public final class ItemSpecifications {
 
     private ItemSpecifications() {
-
     }
 
-    public static Specification<Item> fromCriteria(ItemFilterCriteria itemFilterCriteria){
-        if(Objects.isNull(itemFilterCriteria)){
+    public static Specification<Item> fromCriteria(ItemFilterCriteria itemFilterCriteria) {
+        if (Objects.isNull(itemFilterCriteria)) {
             return alwaysTrue();
         }
 
@@ -37,14 +38,25 @@ public final class ItemSpecifications {
         return itemSpecification;
     }
 
+    public static Specification<Item> cheapestItems(ItemFilterCriteria itemFilterCriteria) {
+        return (root, query, cb) -> {
+            final Subquery<BigDecimal> subquery = query.subquery(BigDecimal.class);
+            final Root<Item> inner = subquery.from(Item.class);
+            subquery.select(cb.min(inner.get("price"))).where(
+                    cb.equal(inner.get("name"), root.get("name"))
+            );
+            return cb.equal(root.get("price"), subquery);
+        };
+    }
+
     private static Specification<Item> andIf(Specification<Item> baseSpec, boolean conditionForNewSpec, Specification<Item> specToCompound) {
-        if(conditionForNewSpec){
+        if (conditionForNewSpec) {
             return baseSpec.and(specToCompound);
         }
         return baseSpec;
     }
 
-    private static Specification<Item> alwaysTrue(){
+    private static Specification<Item> alwaysTrue() {
         return (root, query, cb) -> cb.conjunction();
     }
 

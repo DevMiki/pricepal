@@ -55,8 +55,11 @@ public class ItemFacadeImpl implements ItemFacade{
                 : Sort.by(Sort.Direction.ASC, "name");
         final Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sorting);
 
-        final Specification<Item> itemSpecification = ItemSpecifications.fromCriteria(itemFilterCriteria);
-        final Page<Item> items = itemRepository.findAll(itemSpecification, pageRequest);
+        Specification<Item> baseSpec = ItemSpecifications.fromCriteria(itemFilterCriteria);
+        if(itemFilterCriteria.cheapestOnly()){
+            baseSpec = baseSpec.and(ItemSpecifications.cheapestItems(itemFilterCriteria));
+        }
+        final Page<Item> items = itemRepository.findAll(baseSpec, pageRequest);
         final Page<ItemResponseDTO> itemPage = items.map(itemMapper::toResponse);
         return PageResponse.from(itemPage);
     }

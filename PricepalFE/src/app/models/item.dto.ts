@@ -39,4 +39,5 @@ export interface ItemFilterCriteriaRequest {
     priceEquals?: number | null;
     priceMin?: number | null;
     priceMax?: number | null;
+    cheapestOnly?: boolean;
 }

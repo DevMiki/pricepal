@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -58,6 +59,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(ItemFilterComponent) itemFilterComponent!: ItemFilterComponent;
+  @Input() cheapestOnly = false;
 
   displayedColumns: ItemTableColumn[] = [
     'name',
@@ -80,6 +82,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
+    this.filters = { ...this.filters, cheapestOnly: this.cheapestOnly}
     this.loadItems();
   }
 
@@ -111,6 +114,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
     priceEquals: null,
     priceMin: null,
     priceMax: null,
+    cheapestOnly: this.cheapestOnly
   };
 
   protected activeFilterChips: FilterChip[] = [];
@@ -173,14 +177,13 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
     this.itemFilterComponent.clearFilterField(
       filterChip.key as keyof FiltersFormValue
     );
-    console.log(this.filters);
     this.updateActiveFilterChips();
     this.resetPage();
     this.loadItems();
   }
 
   onFiltersChange(newFilters: ItemFilterCriteriaRequest): void {
-    this.filters = newFilters;
+    this.filters = {...newFilters, cheapestOnly: this.cheapestOnly};
     this.updateActiveFilterChips();
     this.resetPage();
     this.loadItems();
@@ -192,11 +195,12 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   }
 
   loadItems(): void {
+    const mergedFilters = { ...this.filters, cheapestOnly: this.cheapestOnly }
     this.dataSource.loadItems(
       `${this.query.sort.active},${this.query.sort.direction}`,
       this.query.page,
       this.query.size,
-      this.filters
+      mergedFilters
     );
   }
 
