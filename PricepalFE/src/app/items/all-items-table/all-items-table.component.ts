@@ -27,6 +27,9 @@ import {
   ItemFilterComponent,
 } from 'app/items/item-filter/item-filter.component';
 import { ItemDataSource } from './item.datasource';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from 'app/confirm-delete-dialog/confirm-delete-dialog.component';
+import { filter, switchMap } from 'rxjs';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
@@ -60,6 +63,8 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(ItemFilterComponent) itemFilterComponent!: ItemFilterComponent;
   @Input() cheapestOnly = false;
+
+  private dialog = inject(MatDialog);
 
   dataColumns: ItemTableColumn[] = [
     'name',
@@ -218,6 +223,16 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(item: ItemResponseDTO){
-    console.log('works')
+    this.dialog.open(ConfirmDeleteDialogComponent, { data: { name: item.name}})
+    .afterClosed()
+    .pipe(
+      filter((confirmed) => confirmed === true),
+      switchMap(() => this.itemService.deleteItem(item.id)),
+      untilDestroyed(this)
+    )
+    .subscribe({
+      next: () => this.loadItems(),
+      error: (error) => console.error('Delete failed', error)
+    })
   }
 }
