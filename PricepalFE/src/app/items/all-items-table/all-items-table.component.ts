@@ -7,25 +7,25 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ItemFilterCriteriaRequest, ItemResponseDTO } from '@models';
-import { ItemService } from '@services/item.service';
-import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import {
   MatPaginator,
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { Router, ɵEmptyOutletComponent } from '@angular/router';
+import { ItemFilterCriteriaRequest, ItemResponseDTO } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ItemService } from '@services/item.service';
 import {
   FiltersFormValue,
   ItemFilterComponent,
 } from 'app/items/item-filter/item-filter.component';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 import { ItemDataSource } from './item.datasource';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
@@ -50,7 +50,7 @@ type FilterChip = {
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
-  ],
+],
   templateUrl: './all-items-table.component.html',
   styleUrl: './all-items-table.component.scss',
 })
@@ -61,12 +61,17 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(ItemFilterComponent) itemFilterComponent!: ItemFilterComponent;
   @Input() cheapestOnly = false;
 
-  displayedColumns: ItemTableColumn[] = [
+  dataColumns: ItemTableColumn[] = [
     'name',
     'price',
     'supermarket',
     'notes',
   ];
+
+  displayedColumns: Array<ItemTableColumn | 'actions'> = [
+    ...this.dataColumns,
+    'actions'
+  ]
 
   private router = inject(Router);
   private itemService = inject(ItemService);
@@ -206,5 +211,13 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
 
   addItem() {
     this.router.navigate(['/add-item'])
+  }
+
+  onEdit(item: ItemResponseDTO){
+    console.log('works')
+  }
+
+  onDelete(item: ItemResponseDTO){
+    console.log('works')
   }
 }

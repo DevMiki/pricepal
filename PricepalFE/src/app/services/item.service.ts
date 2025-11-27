@@ -4,6 +4,7 @@ import {
   ItemCreateDTO,
   ItemFilterCriteriaRequest,
   ItemResponseDTO,
+  ItemUpdateDTO,
   PageResponse,
 } from '../models';
 import { Observable } from 'rxjs';
@@ -67,5 +68,16 @@ export class ItemService {
       this.BASE_API_PATH,
       itemCreateDTO
     );
+  }
+
+  updateItem(id: number, itemUpdateDTO: ItemUpdateDTO): Observable<ItemResponseDTO> {
+    return this.httpClient.put<ItemResponseDTO>(
+      `${this.BASE_API_PATH}/${id}`,
+      itemUpdateDTO
+    )
+  }
+
+  deleteItem(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.BASE_API_PATH}/${id}`)
   }
 }
