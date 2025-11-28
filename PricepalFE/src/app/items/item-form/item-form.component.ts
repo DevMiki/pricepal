@@ -23,12 +23,15 @@ type FieldKey = 'name' | 'price' | 'supermarket' | 'notes';
 export class ItemFormComponent implements OnInit, OnChanges {
   @Input() initialValue?: Partial<ItemResponseDTO>;
   @Input() submitLabel = 'Save';
+  @Input() cancelLabel = 'Cancel';
   @Input() disableSubmit = false;
+  @Input() resetOnCancel = false;
   @Output() isSubmitted = new EventEmitter<ItemCreateDTO>();
+  @Output() cancelled = new EventEmitter<void>();
   
   private formBuilder = inject(FormBuilder);
   isSubmitting = false;
-  
+
   fields: Array<{
     key: FieldKey;
     label: string;
@@ -78,6 +81,9 @@ export class ItemFormComponent implements OnInit, OnChanges {
   }
 
   onCancel() {
-    this.form.reset();
+    if(this.resetOnCancel){
+      this.form.reset();
+    }
+    this.cancelled.emit();
   }
 }

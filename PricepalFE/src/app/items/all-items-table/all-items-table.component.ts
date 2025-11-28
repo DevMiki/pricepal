@@ -30,6 +30,7 @@ import {
 } from 'app/items/item-filter/item-filter.component';
 import { filter, switchMap } from 'rxjs';
 import { ItemDataSource } from './item.datasource';
+import { EditItemDialogComponent } from '../edit-item-dialog/edit-item-dialog.component';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
@@ -220,7 +221,11 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   }
 
   onEdit(item: ItemResponseDTO){
-    console.log('works')
+    this.dialog
+    .open(EditItemDialogComponent, { data: { item }})
+    .afterClosed()
+    .pipe(filter((result) => !!result), untilDestroyed(this))
+    .subscribe(() => this.loadItems());
   }
 
   onDelete(item: ItemResponseDTO){

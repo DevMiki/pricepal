@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Update Item</h2>
+<mat-dialog-content>
+    <app-item-form
+    [initialValue]="data.item"
+    [submitLabel]="'Update'"
+    [resetOnCancel]="false"
+    [disableSubmit]="isSubmitting"
+    (isSubmitted)="onSubmit($event)"
+    (cancelled)="dialogRef.close()">
+    </app-item-form>
+</mat-dialog-content>

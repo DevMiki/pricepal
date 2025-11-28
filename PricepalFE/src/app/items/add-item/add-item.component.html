@@ -1,6 +1,8 @@
 <div class="add-item-container">
 <app-item-form
   [submitLabel]="'Save'"
+  [cancelLabel]="'Reset'"
+  [resetOnCancel]="true"
   [disableSubmit]="isSubmitting"
   (isSubmitted)="onSubmit($event)"
 ></app-item-form>
