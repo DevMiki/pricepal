@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import {
   MatPaginator,
@@ -18,18 +19,17 @@ import {
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { Router, ɵEmptyOutletComponent } from '@angular/router';
+import { Router } from '@angular/router';
 import { ItemFilterCriteriaRequest, ItemResponseDTO } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ItemService } from '@services/item.service';
+import { ConfirmDeleteDialogComponent } from 'app/confirm-delete-dialog/confirm-delete-dialog.component';
 import {
   FiltersFormValue,
   ItemFilterComponent,
 } from 'app/items/item-filter/item-filter.component';
-import { ItemDataSource } from './item.datasource';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDeleteDialogComponent } from 'app/confirm-delete-dialog/confirm-delete-dialog.component';
 import { filter, switchMap } from 'rxjs';
+import { ItemDataSource } from './item.datasource';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
@@ -53,6 +53,7 @@ type FilterChip = {
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
+    MatDialogModule
 ],
   templateUrl: './all-items-table.component.html',
   styleUrl: './all-items-table.component.scss',

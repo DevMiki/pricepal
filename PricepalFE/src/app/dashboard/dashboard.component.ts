@@ -11,3 +11,5 @@ import { AllItemsTableComponent } from "app/items/all-items-table/all-items-tabl
 export class DashboardComponent {
 
 }
+
+

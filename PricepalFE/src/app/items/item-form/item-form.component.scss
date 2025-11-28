@@ -1,0 +1,71 @@
+.item-form {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 720px;
+  margin: 1.5rem auto;
+  padding: 1.5rem 1.75rem 1.25rem;
+
+  background: radial-gradient(circle at top left, #eff6ff 0, #ffffff 55%);
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .item-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.item-form mat-form-field {
+  width: 100%;
+  margin: 0;
+}
+
+.item-form .mat-mdc-text-field-wrapper {
+  background-color: #f8fafc;
+  border-radius: 10px;
+}
+
+.item-form mat-label {
+  color: #475569;
+  font-weight: 600;
+}
+
+.item-form mat-error {
+  font-size: 0.8rem;
+}
+
+.item-form .actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.item-form .actions button[mat-raised-button] {
+  min-width: 120px;
+  height: 40px;
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+
+  box-shadow: 0 5px 12px rgba(56, 189, 248, 0.25);
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.item-form .actions button[mat-raised-button]:disabled {
+  box-shadow: none;
+  opacity: 0.65;
+}
+
+.item-form .actions button[mat-raised-button]:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.45);
+}
