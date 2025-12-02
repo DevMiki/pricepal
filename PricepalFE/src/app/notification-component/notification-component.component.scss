@@ -1,0 +1,40 @@
+:host {
+    position: fixed;
+    top:16px;
+    right:16px;
+    z-index: 10;
+}
+
+.toast {
+    background: #122707;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    min-width: 220px;
+    max-width: 250px;
+    border-left: 4px solid #1f830b;
+    animation: slide-in 180ms ease-out, fade-out 200ms ease-in 2.8s forwards;
+}
+
+.toast.success {
+    border-left-color:#32ca13
+}
+
+@keyframes slide-in {
+    from{
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}

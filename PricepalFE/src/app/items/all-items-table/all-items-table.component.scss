@@ -107,7 +107,7 @@ mat-paginator {
   outline: none;
 
   .mdc-evolution-chip__action {
-    padding-inline: 8px; 
+    padding-inline: 8px;
   }
 
   mat-icon {
@@ -123,12 +123,14 @@ mat-paginator {
   &:hover {
     background: var(--color-accent);
     box-shadow: 3px 3px 0 rgba(4, 57, 21, 0.24);
-    mat-icon { opacity: 1; transform: translateX(1px); }
+    mat-icon {
+      opacity: 1;
+      transform: translateX(1px);
+    }
   }
 
   &:focus-visible {
-    box-shadow:
-      2px 2px 0 rgba(4, 57, 21, 0.2),
+    box-shadow: 2px 2px 0 rgba(4, 57, 21, 0.2),
       0 0 0 3px rgba(187, 200, 99, 0.8);
   }
 }

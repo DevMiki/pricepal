@@ -31,6 +31,7 @@ import {
 import { filter, switchMap, tap } from 'rxjs';
 import { ItemDataSource } from './item.datasource';
 import { EditItemDialogComponent } from '../edit-item-dialog/edit-item-dialog.component';
+import { NotificationService } from '@services/notification.service';
 
 type ItemTableColumn = keyof Omit<ItemResponseDTO, 'id'>;
 
@@ -67,6 +68,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   @Input() cheapestOnly = false;
 
   private dialog = inject(MatDialog);
+  private notificationService = inject(NotificationService);
 
   dataColumns: ItemTableColumn[] = ['name', 'price', 'supermarket', 'notes'];
 
@@ -215,8 +217,8 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/add-item']);
   }
 
-  private blurTrigger(trigger?: EventTarget | null){
-    if(trigger instanceof HTMLElement){
+  private blurTrigger(trigger?: EventTarget | null) {
+    if (trigger instanceof HTMLElement) {
       trigger.blur();
     }
   }
@@ -229,7 +231,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
         panelClass: 'edit-item-dialog-panel',
         maxWidth: '680px',
         width: '92vw',
-        restoreFocus: false
+        restoreFocus: false,
       })
       .afterClosed()
       .pipe(
@@ -237,7 +239,13 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
         filter((result) => !!result),
         untilDestroyed(this)
       )
-      .subscribe(() => this.loadItems());
+      .subscribe({
+        next: () => {
+          this.loadItems()
+          this.notificationService.notifySuccess('Item edited successfully');
+        },
+        error: (error) => console.error('Edit failed', error),
+      });
   }
 
   onDelete(item: ItemResponseDTO, event?: Event) {
@@ -246,7 +254,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
       .open(ConfirmDeleteDialogComponent, {
         data: { name: item.name },
         panelClass: 'confirm-delete-dialog-panel',
-        restoreFocus: false
+        restoreFocus: false,
       })
       .afterClosed()
       .pipe(
