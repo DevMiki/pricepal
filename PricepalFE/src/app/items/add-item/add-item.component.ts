@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { ItemCreateDTO } from '@models';
 import { ItemService } from '@services/item.service';
 import { ItemFormComponent } from '../item-form/item-form.component';
+import { MatDialogContent } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-item',
   standalone: true,
   imports: [
     ItemFormComponent,
-  ],
+    MatDialogContent
+],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.scss',
 })

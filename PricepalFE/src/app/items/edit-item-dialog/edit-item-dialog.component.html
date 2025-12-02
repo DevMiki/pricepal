@@ -1,11 +1,19 @@
-<h2 mat-dialog-title>Update Item</h2>
-<mat-dialog-content>
-    <app-item-form
-    [initialValue]="data.item"
-    [submitLabel]="'Update'"
-    [resetOnCancel]="false"
-    [disableSubmit]="isSubmitting"
-    (isSubmitted)="onSubmit($event)"
-    (cancelled)="dialogRef.close()">
-    </app-item-form>
-</mat-dialog-content>
+<div class="dialog-shell">
+  <div class="dialog-head">
+    <h2 mat-dialog-title>Update Item</h2>
+    <p class="dialog-subtitle">Update the item details.</p>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="dialog-body">
+      <app-item-form
+        [initialValue]="data.item"
+        [submitLabel]="'Update'"
+        [resetOnCancel]="false"
+        [disableSubmit]="isSubmitting"
+        (isSubmitted)="onSubmit($event)"
+        (cancelled)="dialogRef.close()">
+      </app-item-form>
+    </div>
+  </mat-dialog-content>
+</div>

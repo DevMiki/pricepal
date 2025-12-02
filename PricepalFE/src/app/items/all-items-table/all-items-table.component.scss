@@ -2,14 +2,18 @@
   display: block;
   width: 100%;
 
-  --border-color: #e2e8f0;
-  --light-bg: #f8fafc;
-  --grey-text: #64748b;
-  --dark-text: #1e293b;
+  --border-color: var(--border-soft, rgba(4, 57, 21, 0.16));
+  --light-bg: rgba(187, 200, 99, 0.2);
+  --grey-text: rgba(4, 57, 21, 0.78);
+  --dark-text: var(--color-primary-dark);
 
-  --item-button-box-shadow-light: #0ea5e9;
-  --item-button-box-shadow-dark: #0284c7;
-  --item-button-background: #38bdf8;
+  --item-button-box-shadow-light: var(--color-primary);
+  --item-button-box-shadow-dark: rgba(4, 57, 21, 0.6);
+  --item-button-background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
 }
 
 .main-container {
@@ -25,11 +29,11 @@ app-item-filter {
 
 .results-card {
   position: relative;
-  background: white;
+  background: var(--surface-strong, #ffffff);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 24px rgba(4, 57, 21, 0.14), 0 4px 12px rgba(4, 57, 21, 0.1);
 
   mat-progress-bar {
     position: absolute;
@@ -62,12 +66,12 @@ table {
   }
 
   .mat-mdc-row:hover {
-    background-color: #f1f5f9;
+    background-color: rgba(255, 176, 0, 0.02);
   }
 }
 
 mat-paginator {
-  background: white;
+  background: var(--surface-strong, #ffffff);
   border-top: 1px solid var(--border-color);
   color: var(--grey-text);
   font-size: 0.875rem;
@@ -76,31 +80,56 @@ mat-paginator {
 .active-filters {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.75rem;
+  background: rgba(193, 219, 179, 0.16);
+  margin: -1px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px 10px 0 0;
 }
 
 .active-filters-label {
   font-weight: 500;
-  white-space: nowrap;
+  color: var(--dark-text);
+  margin: 4px 0 0 4px;
 }
 
 .filter-chip {
-  --mdc-chip-label-text-size: 0.85rem;
+  background: rgb(212, 255, 188, 0.5) !important;
+  border: 1px solid var(--border-soft);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 6px;
+  box-shadow: 2px 2px 0 rgba(139, 168, 124, 0.7);
+  outline: none;
 
-  mat-icon[matChipRemove] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    font-size: 18px;
+  .mdc-evolution-chip__action {
+    padding-inline: 8px; 
   }
 
   mat-icon {
-    opacity: 0.6;
-    transition: opacity 0.2s;
+    color: var(--color-primary-dark);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
 
-    &:hover {
-      opacity: 1;
-    }
+  mat-icon[matChipRemove] {
+    opacity: 0.7;
+  }
+
+  &:hover {
+    background: var(--color-accent);
+    box-shadow: 3px 3px 0 rgba(4, 57, 21, 0.24);
+    mat-icon { opacity: 1; transform: translateX(1px); }
+  }
+
+  &:focus-visible {
+    box-shadow:
+      2px 2px 0 rgba(4, 57, 21, 0.2),
+      0 0 0 3px rgba(187, 200, 99, 0.8);
   }
 }
 
@@ -116,39 +145,46 @@ mat-paginator {
   border: none;
   padding: 0 20px;
 
-  background-color: var(--item-button-background);      
+  background: var(--item-button-background);
   color: #ffffff;
   font-weight: 500;
   cursor: pointer;
-  border-radius: 9999px;            
+  border-radius: 9999px;
 
-  box-shadow: 4px 4px 0px var(--item-button-box-shadow-light);   
-  transition: all 0.25s ease-out;
+  box-shadow: 4px 4px 0px var(--item-button-box-shadow-light);
+  transition: box-shadow 0.25s ease-out;
 
-  .button-text {
+  .add-item-label {
     font-weight: 600;
   }
 }
 
-.svg {
+.add-item-icon {
   width: 14px;
+  transition: transform 0.25s ease, opacity 0.2s ease, right 0.25s ease;
+  opacity: 0.9;
   position: absolute;
-  right: 0;
-  margin-right: 20px;
+  right: 1rem;
   fill: #ffffff;
-  transition: all 0.25s ease-out;
+}
+
+.add-item-label {
+  transition: opacity 0.2s ease;
 }
 
 .add-item-button:hover {
-  color: transparent;
-  background-color: var(--item-button-box-shadow-light);        
-  box-shadow: 4px 4px 0px var(--item-button-box-shadow-dark);  
+  background: rgba(4, 57, 21, 0.92);
+  box-shadow: 4px 4px 0 rgba(4, 57, 21, 0.28);
 }
 
-.add-item-button:hover .svg {
+.add-item-button:hover .add-item-icon {
   right: 50%;
   transform: translateX(50%);
-  margin: 0;
+  opacity: 1;
+}
+
+.add-item-button:hover .add-item-label {
+  opacity: 0;
 }
 
 .add-item-button:active {

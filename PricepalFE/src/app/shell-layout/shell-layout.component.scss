@@ -1,16 +1,16 @@
 :host {
   display: block;
-  --nav-bg-1: #fbfdff;
-  --nav-bg-2: #e6f1ff;
-  --nav-border: #d3e2f7;
-  --nav-shadow: 0 8px 22px rgba(15, 76, 168, 0.12);
-  --pill-bg: #ffffff;
-  --pill-border: rgba(134, 174, 230, 0.25);
-  --link: #0d4fa6;
-  --link-hover-bg: #eef4ff;
-  --link-active-bg: linear-gradient(135deg, #5ba9ff, #3e84f7);
+  --nav-bg-1: rgba(187, 200, 99, 0.55);
+  --nav-bg-2: rgba(101, 140, 88, 0.35);
+  --nav-border: rgba(4, 57, 21, 0.16);
+  --nav-shadow: 0 10px 26px rgba(4, 57, 21, 0.18);
+  --pill-bg: rgba(255, 253, 143, 0.4);
+  --pill-border: rgba(4, 57, 21, 0.2);
+  --link: var(--color-primary-dark);
+  --link-hover-bg: rgba(176, 206, 136, 0.38);
+  --link-active-bg: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   --link-active: #ffffff;
-  --link-focus: #9fc6ff;
+  --link-focus: rgba(101, 140, 88, 1)
 }
 
 $nav-link-transition: background 0.2s ease,
@@ -68,8 +68,8 @@ $nav-link-transition: background 0.2s ease,
 
     &:hover {
       background: var(--link-hover-bg);
-      border-color: rgba(44, 122, 252, 0.28);
-      box-shadow: 0 6px 18px rgba(44, 122, 252, 0.16);
+      border-color: rgba(76, 118, 59, 0.35);
+      box-shadow: 0 6px 18px rgba(4, 57, 21, 0.18);
       transform: translateY(-1px);
     }
 
@@ -77,7 +77,7 @@ $nav-link-transition: background 0.2s ease,
       background: var(--link-active-bg);
       color: var(--link-active);
       border-color: transparent;
-      box-shadow: 0 10px 22px rgba(45, 127, 249, 0.2);
+      box-shadow: 0 10px 22px rgba(4, 57, 21, 0.18);
       text-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
     }
 

@@ -1,71 +1,122 @@
-.item-form {
-  box-sizing: border-box;
+:host {
+  display: block;
   width: 100%;
-  max-width: 720px;
-  margin: 1.5rem auto;
-  padding: 1.5rem 1.75rem 1.25rem;
-
-  background: radial-gradient(circle at top left, #eff6ff 0, #ffffff 55%);
-  border-radius: 18px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
-
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem 1.5rem;
 }
 
-@media (min-width: 768px) {
-  .item-form {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.item-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem 1.6rem;
+  padding: 0.4rem 0 0.6rem;
+  margin: 0;
+
+  mat-form-field {
+    --mdc-outlined-text-field-outline-color: transparent;
+    --mdc-outlined-text-field-hover-outline-color: transparent;
+    --mdc-outlined-text-field-focus-outline-color: transparent;
+    --mdc-shape-small: 12px;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    background: transparent;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background-color: rgba(176, 206, 136, 0.12);
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    padding: 0.65rem 0.95rem 0.55rem;
+    overflow: visible;
+
+    &:hover {
+      background-color: rgba(176, 206, 136, 0.18);
+    }
+  }
+
+  mat-label {
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.9rem;
+
+    .cancel-button,
+    .submit-button {
+      min-width: 130px;
+      height: 44px;
+      border-radius: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 1px solid transparent;
+      box-shadow: var(--shadow-elevated);
+      transition: transform 0.16s ease-out, box-shadow 0.16s ease-out,
+        filter 0.16s ease-out;
+      outline: none;
+
+      &:focus-visible {
+        box-shadow: var(--shadow-elevated), 0 0 0 3px rgba(187, 200, 99, 0.8);
+      }
+
+      &:disabled {
+        box-shadow: none;
+        opacity: 0.65;
+      }
+
+      &:not(:disabled):hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    .cancel-button {
+      background: rgba(187, 200, 99, 0.2);
+      border: 1px solid var(--border-soft);
+      color: var(--color-primary-dark);
+
+      &:not(:disabled):hover {
+        filter: brightness(1.02);
+        box-shadow: 0 12px 20px rgba(4, 57, 21, 0.14),
+          4px 4px 0 rgba(4, 57, 21, 0.18);
+      }
+
+      &:not(:disabled):active {
+        box-shadow: 0 6px 10px rgba(4, 57, 21, 0.12),
+          2px 2px 0 rgba(4, 57, 21, 0.16);
+      }
+    }
+
+    .submit-button {
+      background: linear-gradient(
+        135deg,
+        var(--color-primary),
+        var(--color-primary-dark)
+      );
+      color: #ffffff;
+      box-shadow: 0 12px 22px rgba(4, 57, 21, 0.2),
+        4px 4px 0 rgba(4, 57, 21, 0.32);
+      border: 1px solid transparent;
+      font-weight: 800;
+
+      &:not(:disabled):hover {
+        filter: brightness(1.03);
+        box-shadow: 0 14px 24px rgba(4, 57, 21, 0.24),
+          4px 4px 0 rgba(4, 57, 21, 0.38);
+      }
+
+      &:not(:disabled):active {
+        box-shadow: 0 8px 12px rgba(4, 57, 21, 0.18),
+          2px 2px 0 rgba(4, 57, 21, 0.3);
+      }
+    }
   }
 }
 
-.item-form mat-form-field {
-  width: 100%;
-  margin: 0;
-}
-
-.item-form .mat-mdc-text-field-wrapper {
-  background-color: #f8fafc;
-  border-radius: 10px;
-}
-
-.item-form mat-label {
-  color: #475569;
-  font-weight: 600;
-}
-
-.item-form mat-error {
-  font-size: 0.8rem;
-}
-
-.item-form .actions {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
-}
-
-.item-form .actions button[mat-raised-button] {
-  min-width: 120px;
-  height: 40px;
-  border-radius: 9999px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: none;
-
-  box-shadow: 0 5px 12px rgba(56, 189, 248, 0.25);
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-}
-
-.item-form .actions button[mat-raised-button]:disabled {
-  box-shadow: none;
-  opacity: 0.65;
-}
-
-.item-form .actions button[mat-raised-button]:not(:disabled):hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.45);
+@media (min-width: 640px) {
+  .item-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

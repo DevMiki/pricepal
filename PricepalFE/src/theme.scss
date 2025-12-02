@@ -1,0 +1,51 @@
+@use "@angular/material" as mat;
+
+$pricepal-palette: (
+  50: #b0ce88,
+  100: #b0ce88,
+  200: #b0ce88,
+  300: #b0ce88,
+  400: #4c763b,
+  500: #4c763b,
+  600: #043915,
+  700: #043915,
+  800: #043915,
+  900: #043915,
+  A100: #fffd8f,
+  A200: #fffd8f,
+  A400: #fffd8f,
+  A700: #fffd8f,
+  contrast: (
+    50: #043915,
+    100: #043915,
+    200: #043915,
+    300: #043915,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #043915,
+    A200: #043915,
+    A400: #043915,
+    A700: #043915,
+  ),
+);
+
+$pricepal-primary: mat.define-palette($pricepal-palette, 500, 600, 700);
+$pricepal-accent: mat.define-palette($pricepal-palette, A200, A400, A700);
+$pricepal-warn: mat.define-palette($pricepal-palette, 700, 800, 900);
+
+$pricepal-theme: mat.define-light-theme((
+  color: (
+    primary: $pricepal-primary,
+    accent: $pricepal-accent,
+    warn: $pricepal-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.core();
+@include mat.all-component-themes($pricepal-theme);

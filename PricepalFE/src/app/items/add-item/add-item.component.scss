@@ -1,15 +1,9 @@
-.add-item-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1.5rem;
-}
-
-.add-item-form {
-    display: grid;
-    gap: 1rem;
-}
-
-.actions {
-    display: flex;
-    gap: 0.75rem;
+.add-item-shell {
+  max-width: 1000px;
+  margin: 24px auto 0;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 10px;
+  padding: 16px;
+  background: rgba(255, 253, 143, 0.04);
+  box-shadow: var(--shadow-elevated);
 }

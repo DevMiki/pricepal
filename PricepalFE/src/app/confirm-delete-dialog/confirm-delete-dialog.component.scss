@@ -1,0 +1,108 @@
+:host {
+  --border-color: var(--border-soft, rgba(4, 57, 21, 0.16));
+  --grey-text: rgba(4, 57, 21, 0.7);
+  --dark-text: var(--color-primary-dark, #043915);
+  --primary: var(--color-primary, #7aa31c);
+  --primary-strong: #043f17;
+  --warn-start: #c0392b;
+  --warn-end: #e17055;
+  color: var(--dark-text);
+}
+
+.dialog-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: var(--dark-text);
+  background: rgba(249, 234, 122, 0.1);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  color: var(--dark-text);
+  font-size: 1.2rem;
+  letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+.item-name {
+  font-weight: 700;
+  color: var(--dark-text);
+}
+
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.9rem;
+
+  .cancel-button,
+  .submit-button {
+    min-width: 130px;
+    height: 44px;
+    border-radius: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-elevated);
+    transition: transform 0.16s ease-out, box-shadow 0.16s ease-out,
+      filter 0.16s ease-out;
+    outline: none;
+
+    &:focus-visible {
+      box-shadow: var(--shadow-elevated), 0 0 0 3px rgba(187, 200, 99, 0.8);
+    }
+
+    &:disabled {
+      box-shadow: none;
+      opacity: 0.65;
+    }
+
+    &:not(:disabled):hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .cancel-button {
+    background: rgba(187, 200, 99, 0.2);
+    border: 1px solid var(--border-soft);
+    color: var(--color-primary-dark);
+
+    &:not(:disabled):hover {
+      filter: brightness(1.02);
+      box-shadow: 0 12px 20px rgba(4, 57, 21, 0.14),
+        4px 4px 0 rgba(4, 57, 21, 0.18);
+    }
+
+    &:not(:disabled):active {
+      box-shadow: 0 6px 10px rgba(4, 57, 21, 0.12),
+        2px 2px 0 rgba(4, 57, 21, 0.16);
+    }
+  }
+
+  .submit-button {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-primary-dark)
+    );
+    color: #ffffff;
+    box-shadow: 0 12px 22px rgba(4, 57, 21, 0.2),
+      4px 4px 0 rgba(4, 57, 21, 0.32);
+    border: 1px solid transparent;
+    font-weight: 800;
+
+    &:not(:disabled):hover {
+      filter: brightness(1.03);
+      box-shadow: 0 14px 24px rgba(4, 57, 21, 0.24),
+        4px 4px 0 rgba(4, 57, 21, 0.38);
+    }
+
+    &:not(:disabled):active {
+      box-shadow: 0 8px 12px rgba(4, 57, 21, 0.18),
+        2px 2px 0 rgba(4, 57, 21, 0.3);
+    }
+  }
+}

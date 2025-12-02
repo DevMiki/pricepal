@@ -1,13 +1,13 @@
 :host {
-  --border-color: #e2e8f0;
-  --light-bg: #f8fafc;
-  --dark-text: #1e293b;
-  --primary-blue: #2563eb;
-  --primary-hover: #1d4ed8;
+  --border-color: var(--border-soft, rgba(4, 57, 21, 0.16));
+  --light-bg: rgba(187, 200, 99, 0.2);
+  --dark-text: var(--color-primary-dark);
+  --primary-tone: var(--color-primary);
+  --primary-hover: var(--color-primary-dark);
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .filters-grid {
@@ -19,65 +19,77 @@
 
 .filters-container {
   padding: 1.5rem;
-  background: white;
+  background: var(--surface-strong, #ffffff);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 22px rgba(4, 57, 21, 0.12),
+    0 3px 10px rgba(4, 57, 21, 0.08);
 }
 
 .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
+
+
 .filter-group label {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--dark-text);
-    margin-left: 2px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--dark-text);
+  margin-left: 2px;
 }
 
 .filter-group input {
-    width: 100%;
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background-color: var(--light-bg);
-    color: var(--dark-text);
-    transition: all 0.4s;
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--light-bg);
+  color: var(--dark-text);
+  transition: all 0.4s;
 }
 
 .filter-group input:focus {
-    outline: none;
-    background-color: white;
-    border-color: var(--border-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline: none;
+  background-color: rgba(255, 253, 143, 0.3);
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 3px rgba(225, 240, 129, 0.5);;
 }
 
-.price-range-group .price-range{
+.filter-group input:-internal-autofill-selected,
+.filter-group input:-webkit-autofill {
+  background-color: rgba(245, 182, 8, 0.3) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: 0 0 0 1000px rgba(245, 182, 8, 0.4) inset;
+  -webkit-text-fill-color: var(--dark-text);
+}
+
+
+.price-range-group .price-range {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .filter-actions button {
-    width: 100%;
-    padding: 0.6rem 1rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    background-color: var(--primary-blue);
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  background-color: var(--primary-tone);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+  outline: none;
 }
 
 .filter-actions button:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-1px);
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
 }
-
 
 .filter-actions {
   display: flex;
@@ -91,19 +103,18 @@
   gap: 0.5rem;
   padding: 0.6rem 1rem;
   border: none;
-  border-radius: 9999px;
-  background: #38bdf8;
-  color: #ffffff;
+  background: var(--item-button-background);
+  color: var(--color-primary-dark);
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 4px 4px 0 #0ea5e9;
+  box-shadow: 4px 4px 0 rgba(4, 57, 21, 0.65);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   overflow: hidden;
+  outline: none;
 }
 
 .reset-icon {
   width: 18px;
-  height: 18px;
   transition: transform 0.25s ease, opacity 0.2s ease, right 0.25s ease;
   opacity: 0.9;
   position: absolute;
@@ -115,8 +126,8 @@
 }
 
 .reset-button:hover {
-  background: #0ea5e9;
-  box-shadow: 4px 4px 0 #0284c7;
+  background: rgba(4, 57, 21, 0.92);
+  box-shadow: 4px 4px 0 rgba(4, 57, 21, 0.28);
 }
 
 .reset-button:hover .reset-icon {
@@ -131,6 +142,10 @@
 
 .reset-button:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 #0ea5e9;
+  box-shadow: 2px 2px 0 rgba(4, 57, 21, 0.2);
 }
 
+.reset-button:focus-visible {
+  box-shadow: 4px 4px 0 rgba(4, 57, 21, 0.24),
+    0 0 0 3px rgba(255, 253, 143, 0.9);
+}

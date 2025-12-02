@@ -1,4 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-primary: #4c763b;
+  --color-primary-dark: rgb(4, 57, 21);
+  --color-primary-light: #b0ce88;
+  --color-accent: #C1DBB3;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  --surface: #ffffff;
+  --surface-muted: rgba(187, 200, 99, 0.12);
+  --surface-strong: #ffffff;
+  --border-soft: rgba(4, 57, 21, 0.16);
+  --border-strong: rgba(4, 57, 21, 0.24);
+  --text-strong: #043915;
+  --text-muted: rgba(4, 57, 21, 0.78);
+  --focus-ring: 0 0 0 3px rgba(187, 200, 99, 0.8);
+  --shadow-elevated: 0 10px 18px rgba(4, 57, 21, 0.12),
+    4px 4px 0 rgba(4, 57, 21, 0.12);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(212, 255, 143, 0.10) 0%,
+      rgba(185, 242, 51, 0.08) 35%,
+      rgba(142, 177, 97, 0.07) 70%,
+      rgba(127, 163, 81, 0.03) 100%
+    );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: var(--surface);
+  color: var(--text-strong);
+}
+
+.edit-item-dialog-panel .mat-mdc-dialog-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 18px rgba(4, 57, 21, 0.12),
+    4px 4px 0 rgba(4, 57, 21, 0.12);
+}
+
+.confirm-delete-dialog-panel .mat-mdc-dialog-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 18px rgba(4, 57, 21, 0.12),
+    4px 4px 0 rgba(4, 57, 21, 0.12);
+}

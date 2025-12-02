@@ -1,9 +1,19 @@
-<div class="add-item-container">
-<app-item-form
-  [submitLabel]="'Save'"
-  [cancelLabel]="'Reset'"
-  [resetOnCancel]="true"
-  [disableSubmit]="isSubmitting"
-  (isSubmitted)="onSubmit($event)"
-></app-item-form>
+<div class="add-item-shell">
+  <div class="add-item-head">
+    <h2>Add item</h2>
+    <p class="add-item-subtitle">Fill the new item details.</p>
+  </div>
+
+  <mat-dialog-content>
+    <div class="add-item-body">
+      <app-item-form
+        class="framed-form"
+        [submitLabel]="'Save'"
+        [cancelLabel]="'Reset'"
+        [resetOnCancel]="true"
+        [disableSubmit]="isSubmitting"
+        (isSubmitted)="onSubmit($event)"
+      ></app-item-form>
+    </div>
+  </mat-dialog-content>
 </div>

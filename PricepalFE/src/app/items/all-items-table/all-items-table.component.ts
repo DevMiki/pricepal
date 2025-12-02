@@ -54,8 +54,8 @@ type FilterChip = {
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule
-],
+    MatDialogModule,
+  ],
   templateUrl: './all-items-table.component.html',
   styleUrl: './all-items-table.component.scss',
 })
@@ -68,17 +68,12 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
 
   private dialog = inject(MatDialog);
 
-  dataColumns: ItemTableColumn[] = [
-    'name',
-    'price',
-    'supermarket',
-    'notes',
-  ];
+  dataColumns: ItemTableColumn[] = ['name', 'price', 'supermarket', 'notes'];
 
   displayedColumns: Array<ItemTableColumn | 'actions'> = [
     ...this.dataColumns,
-    'actions'
-  ]
+    'actions',
+  ];
 
   private router = inject(Router);
   private itemService = inject(ItemService);
@@ -94,7 +89,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
-    this.filters = { ...this.filters, cheapestOnly: this.cheapestOnly}
+    this.filters = { ...this.filters, cheapestOnly: this.cheapestOnly };
     this.loadItems();
   }
 
@@ -126,7 +121,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
     priceEquals: null,
     priceMin: null,
     priceMax: null,
-    cheapestOnly: this.cheapestOnly
+    cheapestOnly: this.cheapestOnly,
   };
 
   protected activeFilterChips: FilterChip[] = [];
@@ -195,7 +190,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   }
 
   onFiltersChange(newFilters: ItemFilterCriteriaRequest): void {
-    this.filters = {...newFilters, cheapestOnly: this.cheapestOnly};
+    this.filters = { ...newFilters, cheapestOnly: this.cheapestOnly };
     this.updateActiveFilterChips();
     this.resetPage();
     this.loadItems();
@@ -207,7 +202,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   }
 
   loadItems(): void {
-    const mergedFilters = { ...this.filters, cheapestOnly: this.cheapestOnly }
+    const mergedFilters = { ...this.filters, cheapestOnly: this.cheapestOnly };
     this.dataSource.loadItems(
       `${this.query.sort.active},${this.query.sort.direction}`,
       this.query.page,
@@ -217,28 +212,40 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   }
 
   addItem() {
-    this.router.navigate(['/add-item'])
+    this.router.navigate(['/add-item']);
   }
 
-  onEdit(item: ItemResponseDTO){
+  onEdit(item: ItemResponseDTO) {
     this.dialog
-    .open(EditItemDialogComponent, { data: { item }})
-    .afterClosed()
-    .pipe(filter((result) => !!result), untilDestroyed(this))
-    .subscribe(() => this.loadItems());
+      .open(EditItemDialogComponent, {
+        data: { item },
+        panelClass: 'edit-item-dialog-panel',
+        maxWidth: '680px',
+        width: '92vw',
+      })
+      .afterClosed()
+      .pipe(
+        filter((result) => !!result),
+        untilDestroyed(this)
+      )
+      .subscribe(() => this.loadItems());
   }
 
-  onDelete(item: ItemResponseDTO){
-    this.dialog.open(ConfirmDeleteDialogComponent, { data: { name: item.name}})
-    .afterClosed()
-    .pipe(
-      filter((confirmed) => confirmed === true),
-      switchMap(() => this.itemService.deleteItem(item.id)),
-      untilDestroyed(this)
-    )
-    .subscribe({
-      next: () => this.loadItems(),
-      error: (error) => console.error('Delete failed', error)
-    })
+  onDelete(item: ItemResponseDTO) {
+    this.dialog
+      .open(ConfirmDeleteDialogComponent, {
+        data: { name: item.name },
+        panelClass: 'confirm-delete-dialog-panel',
+      })
+      .afterClosed()
+      .pipe(
+        filter((confirmed) => confirmed === true),
+        switchMap(() => this.itemService.deleteItem(item.id)),
+        untilDestroyed(this)
+      )
+      .subscribe({
+        next: () => this.loadItems(),
+        error: (error) => console.error('Delete failed', error),
+      });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { ItemResponseDTO, ItemUpdateDTO } from '@models';
 import { ItemService } from '@services/item.service';
@@ -11,7 +11,8 @@ type EditItemData = { item: ItemResponseDTO }
   standalone: true,
   imports: [ItemFormComponent, MatDialogContent, MatDialogTitle],
   templateUrl: './edit-item-dialog.component.html',
-  styleUrl: './edit-item-dialog.component.scss'
+  styleUrl: './edit-item-dialog.component.scss',
+    encapsulation: ViewEncapsulation.None,
 })
 export class EditItemDialogComponent {
 
