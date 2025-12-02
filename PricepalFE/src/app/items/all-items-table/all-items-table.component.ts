@@ -28,7 +28,7 @@ import {
   FiltersFormValue,
   ItemFilterComponent,
 } from 'app/items/item-filter/item-filter.component';
-import { filter, switchMap } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs';
 import { ItemDataSource } from './item.datasource';
 import { EditItemDialogComponent } from '../edit-item-dialog/edit-item-dialog.component';
 
@@ -215,30 +215,42 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/add-item']);
   }
 
-  onEdit(item: ItemResponseDTO) {
+  private blurTrigger(trigger?: EventTarget | null){
+    if(trigger instanceof HTMLElement){
+      trigger.blur();
+    }
+  }
+
+  onEdit(item: ItemResponseDTO, event?: Event) {
+    const buttonTrigger = event?.currentTarget;
     this.dialog
       .open(EditItemDialogComponent, {
         data: { item },
         panelClass: 'edit-item-dialog-panel',
         maxWidth: '680px',
         width: '92vw',
+        restoreFocus: false
       })
       .afterClosed()
       .pipe(
+        tap(() => this.blurTrigger(buttonTrigger)),
         filter((result) => !!result),
         untilDestroyed(this)
       )
       .subscribe(() => this.loadItems());
   }
 
-  onDelete(item: ItemResponseDTO) {
+  onDelete(item: ItemResponseDTO, event?: Event) {
+    const buttonTrigger = event?.currentTarget;
     this.dialog
       .open(ConfirmDeleteDialogComponent, {
         data: { name: item.name },
         panelClass: 'confirm-delete-dialog-panel',
+        restoreFocus: false
       })
       .afterClosed()
       .pipe(
+        tap(() => this.blurTrigger(buttonTrigger)),
         filter((confirmed) => confirmed === true),
         switchMap(() => this.itemService.deleteItem(item.id)),
         untilDestroyed(this)
