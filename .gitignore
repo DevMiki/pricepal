@@ -7,7 +7,9 @@ Thumbs.db
 # Node
 /node_modules
 npm-debug.log
+npm-debug.log.*
 yarn-error.log
+yarn-debug.log*
 
 # -----------------------------
 # Editors / IDEs
@@ -18,7 +20,9 @@ yarn-error.log
 *.iml
 *.iws
 *.ipr
-
+.classpath
+.project
+.settings/
 
 # -----------------------------
 # Logs & caches
@@ -27,6 +31,7 @@ yarn-error.log
 logs/
 **/.cache/
 **/.eslintcache
+hs_err_pid*.log
 
 # -----------------------------
 # Secrets (adjust to your policy)
@@ -52,8 +57,8 @@ pricepalBE/*.war
 # -----------------------------
 # Frontend (Angular)
 # -----------------------------
-pricepalFE/node_modules/
-pricepalFE/dist/
-pricepalFE/.angular/
-pricepalFE/.angular/cache/
-pricepalFE/coverage/
+PricepalFE/node_modules/
+PricepalFE/dist/
+PricepalFE/.angular/
+PricepalFE/.angular/cache/
+PricepalFE/coverage/
