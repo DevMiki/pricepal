@@ -1,0 +1,38 @@
+name: MEGA-CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Smoke (checkout + info)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show context
+        run: |
+          echo "ref=${GITHUB_REF}"
+          echo "ref=${GITHUB_SHA}"
+          uname -a
+          echo "Repo root:"
+          ls -la
+
+      - name: Show likely build files
+        run: |
+          for f in docker-compose.yml README.md; do 
+          if [ -f "$f" ]; then echo "FOUND $f"; fi
+          done
