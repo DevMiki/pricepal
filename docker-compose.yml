@@ -3,7 +3,6 @@ services:
     image: postgres:18
     container_name: pricepal-postgres
     restart: unless-stopped
-
     ports:
       - "5432:5432"
 
@@ -16,6 +15,5 @@ services:
     volumes:
       - pricepal_pgdata:/var/lib/postgresql
       - ./pricepalBE/persistence/postgres/01-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
-
 volumes:
   pricepal_pgdata:
