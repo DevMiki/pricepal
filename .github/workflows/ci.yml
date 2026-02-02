@@ -36,3 +36,52 @@ jobs:
           for f in docker-compose.yml README.md; do 
           if [ -f "$f" ]; then echo "FOUND $f"; fi
           done
+
+  frontend_build:
+    name: Frontend (npm ci + build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CI: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: PricepalFE/package-lock.json
+
+      - name: Install dependencies
+        working-directory: PricepalFE
+        run: npm ci
+
+      - name: Build
+        working-directory: PricepalFE
+        run: npm run build
+
+  backend_build:
+    name: Backend (mvn package -DskipTests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Make mvnw executable
+        working-directory: pricepalBE
+        run: chmod +x mvnw
+
+      - name: Build (no tests yet)
+        working-directory: pricepalBE
+        run: ./mvnw -B -ntp -DskipTests package
+
