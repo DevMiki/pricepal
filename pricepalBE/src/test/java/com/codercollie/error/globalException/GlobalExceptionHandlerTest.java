@@ -66,19 +66,68 @@ public class GlobalExceptionHandlerTest {
         final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         mockHttpServletRequest.setRequestURI("/api/items");
 
-        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createItemRequest");
-        bindingResult.addError(new FieldError("createItemRequest", "name", "must not be blank!"));
-        final MethodArgumentNotValidException argumentNotValidException = mock(MethodArgumentNotValidException.class);
-        when(argumentNotValidException.getBindingResult()).thenReturn(bindingResult);
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
+        bindingResult.addError(new FieldError("createProductRequest", "kiwi", "must not be blank!"));
+        final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
-        final ResponseEntity<Map<String, Object>> mapResponseEntity = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
-        final Map<String, Object> body = mapResponseEntity.getBody();
+        final ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        final Map<String, Object> body = response.getBody();
         assertNotNull(body);
         assertNotNull(body.get("timestamp"));
         assertEquals(400, body.get("status"));
         assertEquals("Bad Request", body.get("error"));
         assertEquals("Validation failed", body.get("message"));
         assertEquals("/api/items", body.get("path"));
-        assertEquals(Map.of("name", List.of("must not be blank!")), body.get("fieldErrors"));
+        assertEquals(Map.of("kiwi", List.of("must not be blank!")), body.get("fieldErrors"));
+    }
+
+    @Test
+    void handleValidation_groupsFieldErrorsByFieldName(){
+        final GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
+        final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        mockHttpServletRequest.setRequestURI("/api/items");
+
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
+        bindingResult.addError(new FieldError("createProductRequest", "kiwi", "must not be blank!"));
+        bindingResult.addError(new FieldError("createProductRequest", "kiwi", "size must be between 2 and 42"));
+        bindingResult.addError(new FieldError("createProductRequest", "price", "must be greater than 0"));
+
+        final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
+
+        final ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        final Map<String, Object> body = response.getBody();
+        assertNotNull(body);
+
+        final Map<String, List<String>> fieldErrors = (Map<String, List<String>>) body.get("fieldErrors");
+        assertNotNull(fieldErrors);
+        assertEquals(2, fieldErrors.size());
+        assertEquals(List.of("must not be blank!", "size must be between 2 and 42"), fieldErrors.get("kiwi"));
+        assertEquals(List.of("must be greater than 0"), fieldErrors.get("price"));
+    }
+
+    @Test
+    void handleValidation_returnsEmptyFieldErrors_whenValidationHasNoFieldErrors(){
+        final GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
+        final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        mockHttpServletRequest.setRequestURI("/api/items");
+
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
+        final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
+
+        final ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        final Map<String, Object> body = response.getBody();
+        assertNotNull(body);
+
+        final Map<String, List<String>> fieldErrors = (Map<String, List<String>>) body.get("fieldErrors");
+        assertNotNull(fieldErrors);
+        assertTrue(fieldErrors.isEmpty());
+    }
+
+    private static MethodArgumentNotValidException mockValidationException(BeanPropertyBindingResult bindingResult) {
+        final MethodArgumentNotValidException methodArgumentNotValidException = mock(MethodArgumentNotValidException.class);
+        when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
+        return methodArgumentNotValidException;
     }
 }
