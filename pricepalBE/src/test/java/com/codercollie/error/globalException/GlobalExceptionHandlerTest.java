@@ -7,8 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GlobalExceptionHandlerTest {
 
@@ -50,5 +58,27 @@ public class GlobalExceptionHandlerTest {
         assertTrue(body.message().contains("Item not found") && body.message().contains("42"),
                 "Expected message to contain both 'Item not found' and '42' but was: " + body.message());
         assertEquals("/api/test", body.path());
+    }
+
+    @Test
+    void handleValidation_returns400WithApiErrorBody(){
+        final GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
+        final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        mockHttpServletRequest.setRequestURI("/api/items");
+
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createItemRequest");
+        bindingResult.addError(new FieldError("createItemRequest", "name", "must not be blank!"));
+        final MethodArgumentNotValidException argumentNotValidException = mock(MethodArgumentNotValidException.class);
+        when(argumentNotValidException.getBindingResult()).thenReturn(bindingResult);
+
+        final ResponseEntity<Map<String, Object>> mapResponseEntity = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        final Map<String, Object> body = mapResponseEntity.getBody();
+        assertNotNull(body);
+        assertNotNull(body.get("timestamp"));
+        assertEquals(400, body.get("status"));
+        assertEquals("Bad Request", body.get("error"));
+        assertEquals("Validation failed", body.get("message"));
+        assertEquals("/api/items", body.get("path"));
+        assertEquals(Map.of("name", List.of("must not be blank!")), body.get("fieldErrors"));
     }
 }

@@ -39,7 +39,6 @@ public class GlobalExceptionHandler {
             MethodArgumentNotValidException methodArgumentNotValidException,
             HttpServletRequest httpServletRequest
     ) {
-        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
 
         final Map<String, List<String>> fieldErrors = methodArgumentNotValidException.getBindingResult().getFieldErrors()
                 .stream()
@@ -48,9 +47,10 @@ public class GlobalExceptionHandler {
                         Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList())
                 ));
 
+        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         final LinkedHashMap<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", Instant.now());
-        body.put("status", badRequest);
+        body.put("status", badRequest.value());
         body.put("error", badRequest.getReasonPhrase());
         body.put("message", "Validation failed");
         body.put("path", httpServletRequest.getRequestURI());
