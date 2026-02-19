@@ -3,6 +3,7 @@ package com.codercollie.error.globalException;
 import com.codercollie.error.ApiError;
 import com.codercollie.error.GlobalExceptionHandler;
 import com.codercollie.error.ItemNotFoundException;
+import com.codercollie.error.ValidationApiError;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,17 +71,17 @@ public class GlobalExceptionHandlerTest {
         bindingResult.addError(new FieldError("createProductRequest", "kiwi", "must not be blank!"));
         final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
-        final ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        final ResponseEntity<ValidationApiError> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
-        final Map<String, Object> body = response.getBody();
+        final ValidationApiError body = response.getBody();
         assertNotNull(body);
-        assertNotNull(body.get("timestamp"));
-        assertEquals(400, body.get("status"));
-        assertEquals("Bad Request", body.get("error"));
-        assertEquals("Validation failed", body.get("message"));
-        assertEquals("/api/items", body.get("path"));
-        assertEquals(Map.of("kiwi", List.of("must not be blank!")), body.get("fieldErrors"));
+        assertNotNull(body.timestamp());
+        assertEquals(400, body.status());
+        assertEquals("Bad Request", body.error());
+        assertEquals("Validation failed", body.message());
+        assertEquals("/api/items", body.path());
+        assertEquals(Map.of("kiwi", List.of("must not be blank!")), body.fieldErrors());
     }
 
     @Test
@@ -96,11 +97,11 @@ public class GlobalExceptionHandlerTest {
 
         final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
-        final ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
-        final Map<String, Object> body = response.getBody();
+        final ResponseEntity<ValidationApiError> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        final ValidationApiError body = response.getBody();
         assertNotNull(body);
 
-        final Map<String, List<String>> fieldErrors = (Map<String, List<String>>) body.get("fieldErrors");
+        final Map<String, List<String>> fieldErrors = body.fieldErrors();
         assertNotNull(fieldErrors);
         assertEquals(2, fieldErrors.size());
         assertEquals(List.of("must not be blank!", "size must be between 2 and 42"), fieldErrors.get("kiwi"));
@@ -116,11 +117,11 @@ public class GlobalExceptionHandlerTest {
         final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
         final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
-        final ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
-        final Map<String, Object> body = response.getBody();
+        final ResponseEntity<ValidationApiError> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
+        final ValidationApiError body = response.getBody();
         assertNotNull(body);
 
-        final Map<String, List<String>> fieldErrors = (Map<String, List<String>>) body.get("fieldErrors");
+        final Map<String, List<String>> fieldErrors = body.fieldErrors();
         assertNotNull(fieldErrors);
         assertTrue(fieldErrors.isEmpty());
     }

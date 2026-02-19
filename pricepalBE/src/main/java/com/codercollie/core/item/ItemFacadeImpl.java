@@ -63,5 +63,4 @@ public class ItemFacadeImpl implements ItemFacade{
         final Page<ItemResponseDTO> itemPage = items.map(itemMapper::toResponse);
         return PageResponse.from(itemPage);
     }
-
 }
