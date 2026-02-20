@@ -35,7 +35,7 @@ public class GlobalExceptionHandlerIT {
 
     @Test
     void validationError_returns400_andBody() throws Exception {
-        mockMvc.perform(post("/api/product-test")
+        mockMvc.perform(post("/api/item-test")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name":""}
@@ -43,7 +43,7 @@ public class GlobalExceptionHandlerIT {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value("Validation failed"))
-                .andExpect(jsonPath("$.path").value("/api/product-test"))
+                .andExpect(jsonPath("$.path").value("/api/item-test"))
                 .andExpect(jsonPath("$.fieldErrors.name[0]").value("must be not blank"))
                 .andExpect(jsonPath("$.timestamp").exists());
     }

@@ -67,8 +67,8 @@ public class GlobalExceptionHandlerTest {
         final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         mockHttpServletRequest.setRequestURI("/api/items");
 
-        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
-        bindingResult.addError(new FieldError("createProductRequest", "kiwi", "must not be blank!"));
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createItemRequest");
+        bindingResult.addError(new FieldError("createItemRequest", "kiwi", "must not be blank!"));
         final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
         final ResponseEntity<ValidationApiError> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);
@@ -90,10 +90,10 @@ public class GlobalExceptionHandlerTest {
         final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         mockHttpServletRequest.setRequestURI("/api/items");
 
-        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
-        bindingResult.addError(new FieldError("createProductRequest", "kiwi", "must not be blank!"));
-        bindingResult.addError(new FieldError("createProductRequest", "kiwi", "size must be between 2 and 42"));
-        bindingResult.addError(new FieldError("createProductRequest", "price", "must be greater than 0"));
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createItemRequest");
+        bindingResult.addError(new FieldError("createItemRequest", "kiwi", "must not be blank!"));
+        bindingResult.addError(new FieldError("createItemRequest", "kiwi", "size must be between 2 and 42"));
+        bindingResult.addError(new FieldError("createItemRequest", "price", "must be greater than 0"));
 
         final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
@@ -114,7 +114,7 @@ public class GlobalExceptionHandlerTest {
         final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         mockHttpServletRequest.setRequestURI("/api/items");
 
-        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createProductRequest");
+        final BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "createItemRequest");
         final MethodArgumentNotValidException argumentNotValidException = mockValidationException(bindingResult);
 
         final ResponseEntity<ValidationApiError> response = globalExceptionHandler.handleValidation(argumentNotValidException, mockHttpServletRequest);

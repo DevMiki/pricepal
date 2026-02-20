@@ -56,7 +56,7 @@ public class ItemFacadeImpl implements ItemFacade{
         final Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sorting);
 
         Specification<Item> baseSpec = ItemSpecifications.fromCriteria(itemFilterCriteria);
-        if(itemFilterCriteria.cheapestOnly()){
+        if(itemFilterCriteria != null && itemFilterCriteria.cheapestOnly()){
             baseSpec = baseSpec.and(ItemSpecifications.cheapestItems(itemFilterCriteria));
         }
         final Page<Item> items = itemRepository.findAll(baseSpec, pageRequest);
