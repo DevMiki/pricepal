@@ -1,4 +1,4 @@
-package com.codercollie.core.item.dto;
+package web.dto;
 
 import java.math.BigDecimal;
 

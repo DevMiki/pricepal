@@ -131,7 +131,7 @@ export class AllItemsTableComponent implements OnInit, AfterViewInit {
   private updateActiveFilterChips(): void {
     const chips: FilterChip[] = [];
 
-    if (this.filters.nameContains) {
+    if (this.filters.nameContains) { 
       chips.push({
         key: 'nameContains',
         label: 'Name',

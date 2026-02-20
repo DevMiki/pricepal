@@ -61,7 +61,8 @@ public final class ItemSpecifications {
     }
 
     private static Specification<Item> ilike(String field, String value) {
-        return (root, query, cb) -> cb.like(cb.lower(root.get(field)), "%" + value.toLowerCase() + "%");
+        return (root, query, cb) -> cb.like(cb.lower(root.get(field)),
+                "%" + value.toLowerCase() + "%");
     }
 
     private static Specification<Item> priceEquals(BigDecimal price) {

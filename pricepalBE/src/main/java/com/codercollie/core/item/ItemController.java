@@ -1,9 +1,9 @@
 package com.codercollie.core.item;
 
 import com.codercollie.common.PageResponse;
-import com.codercollie.core.item.dto.ItemCreateDTO;
-import com.codercollie.core.item.dto.ItemResponseDTO;
-import com.codercollie.core.item.dto.ItemUpdateDTO;
+import web.dto.ItemCreateDTO;
+import web.dto.ItemResponseDTO;
+import web.dto.ItemUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

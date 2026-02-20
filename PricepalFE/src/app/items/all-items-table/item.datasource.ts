@@ -41,8 +41,6 @@ export class ItemDataSource implements DataSource<ItemResponseDTO> {
         .subscribe(({content, totalElements}) => {
             this.itemSubject.next(content)
             this.totalSubject.next(totalElements)
-        }
-        )
+        })
     }
-    
 }
