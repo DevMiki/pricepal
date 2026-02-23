@@ -16,6 +16,11 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    public SecurityConfig(OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
+        this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
+    }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, Environment environment) throws Exception {
 
@@ -36,7 +41,7 @@ public class SecurityConfig {
 
         final Boolean requireAuth = environment.getProperty("app.security.require-auth", Boolean.class, false);
         if(requireAuth){
-            httpSecurity.oauth2Login(Customizer.withDefaults());
+            httpSecurity.oauth2Login(oauth -> oauth.successHandler(oAuth2LoginSuccessHandler));
         }
 
         return httpSecurity.build();
